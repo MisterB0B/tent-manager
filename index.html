@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tent Manager | The Light Park</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --surface2: #1a1a25;
+      --border: #2a2a3a;
+      --text: #f0f0f5;
+      --text-dim: #8888a0;
+      --purple: #a855f7;
+      --teal: #06d6a0;
+      --pink: #ec4899;
+      --red: #ef4444;
+      --orange: #f97316;
+      --yellow: #eab308;
+      --green: #22c55e;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s;
+    }
+    
+    #splash.hidden { opacity: 0; pointer-events: none; }
+    #splash img { max-width: 80%; max-height: 40vh; }
+    
+    /* Header */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .header-logo {
+      height: 36px;
+    }
+    
+    .venue-selector {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .weather-badge {
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    /* Navigation */
+    .nav {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+      background: var(--surface);
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .nav-btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    
+    .nav-btn:hover { background: var(--surface2); color: var(--text); }
+    .nav-btn.active { background: var(--purple); color: #fff; }
+    
+    /* Main Content */
+    .main {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    /* Section */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .section-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-body {
+      padding: 16px 20px;
+    }
+    
+    /* Task List */
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .task-item:last-child { border-bottom: none; }
+    
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    
+    .task-checkbox:hover { border-color: var(--purple); }
+    .task-checkbox.checked { background: var(--green); border-color: var(--green); }
+    .task-checkbox.checked::after { content: '✓'; color: #fff; font-size: 14px; }
+    
+    .task-content { flex: 1; }
+    .task-title { font-size: 14px; font-weight: 500; }
+    .task-meta { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+    .task-item.completed .task-title { text-decoration: line-through; color: var(--text-dim); }
+    
+    .task-priority {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    
+    .priority-high { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+    .priority-medium { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
+    .priority-low { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+    
+    /* Staff Grid */
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    
+    .staff-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .staff-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .staff-info h4 { font-size: 14px; font-weight: 600; }
+    .staff-info p { font-size: 12px; color: var(--text-dim); }
+    
+    .staff-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: auto;
+    }
+    
+    .status-active { background: var(--green); }
+    .status-break { background: var(--yellow); }
+    .status-off { background: var(--text-dim); }
+    
+    /* Mascot Rotation */
+    .mascot-timer {
+      text-align: center;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(6, 214, 160, 0.1));
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .mascot-timer h3 {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    
+    .mascot-countdown {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .mascot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    
+    .mascot-card {
+      background: var(--surface2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .mascot-card.active {
+      border: 2px solid var(--green);
+      background: rgba(34, 197, 94, 0.1);
+    }
+    
+    .mascot-card.on-break {
+      border: 2px solid var(--yellow);
+      background: rgba(234, 179, 8, 0.1);
+    }
+    
+    .mascot-icon { font-size: 32px; margin-bottom: 8px; }
+    .mascot-name { font-weight: 600; font-size: 14px; }
+    .mascot-person { font-size: 12px; color: var(--text-dim); }
+    .mascot-status { font-size: 11px; margin-top: 6px; padding: 4px 8px; border-radius: 4px; display: inline-block; }
+    .mascot-status.active { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+    .mascot-status.break { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
+    
+    /* Quick Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    
+    /* Contact Cards */
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: var(--surface2);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .contact-info h4 { font-size: 14px; font-weight: 600; }
+    .contact-info p { font-size: 13px; color: var(--text-dim); }
+    
+    .contact-action {
+      margin-left: auto;
+      padding: 8px 16px;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    /* Inventory */
+    .inventory-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .inventory-item:last-child { border-bottom: none; }
+    
+    .inventory-name { font-size: 14px; }
+    
+    .inventory-stock {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .stock-bar {
+      width: 100px;
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .stock-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    
+    .stock-high { background: var(--green); }
+    .stock-medium { background: var(--yellow); }
+    .stock-low { background: var(--red); }
+    
+    .stock-count {
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 50px;
+      text-align: right;
+    }
+    
+    /* Cash Log */
+    .cash-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .cash-box {
+      background: var(--surface2);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .cash-box h4 {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    
+    .cash-box .amount {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    
+    .amount.positive { color: var(--green); }
+    .amount.negative { color: var(--red); }
+    
+    /* Music Player */
+    .music-player {
+      background: linear-gradient(135deg, var(--surface2), var(--surface));
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .now-playing {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    
+    .song-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .song-artist {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    
+    .music-controls {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    
+    .music-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .music-btn:hover { background: var(--purple); }
+    .music-btn.play { background: var(--purple); width: 56px; height: 56px; font-size: 24px; }
+    
+    .playlist-selector {
+      margin-top: 16px;
+    }
+    
+    .playlist-selector select {
+      width: 100%;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+    }
+    
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--teal));
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+      transition: all 0.2s;
+    }
+    
+    .fab:hover { transform: scale(1.1); }
+    
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header { flex-wrap: wrap; gap: 12px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .mascot-grid { grid-template-columns: 1fr; }
+      .cash-summary { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <img src="logo.jpg" alt="Tent Manager">
+  </div>
+  
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <img src="logo.jpg" alt="Tent Manager" class="header-logo">
+      <select class="venue-selector" id="venueSelect">
+        <option>Katy</option>
+        <option>Spring</option>
+        <option>Selma</option>
+        <option>Missions</option>
+        <option>Arlington</option>
+        <option>Frisco</option>
+        <option>Round Rock</option>
+        <option>Oklahoma City</option>
+      </select>
+    </div>
+    <div class="header-right">
+      <div class="weather-badge">
+        <span>🌙</span>
+        <span>52°F</span>
+      </div>
+      <div class="user-avatar">MG</div>
+    </div>
+  </header>
+  
+  <!-- Navigation -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showPage('dashboard')">📊 Dashboard</button>
+    <button class="nav-btn" onclick="showPage('tasks')">✅ My Tasks</button>
+    <button class="nav-btn" onclick="showPage('staff')">👥 Staff</button>
+    <button class="nav-btn" onclick="showPage('mascots')">🐻‍❄️ Mascots</button>
+    <button class="nav-btn" onclick="showPage('inventory')">📦 Inventory</button>
+    <button class="nav-btn" onclick="showPage('cash')">💵 Cash</button>
+    <button class="nav-btn" onclick="showPage('music')">🎵 Music</button>
+    <button class="nav-btn" onclick="showPage('contacts')">📞 Contacts</button>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="main">
+    
+    <!-- Dashboard Page -->
+    <div class="page active" id="dashboard">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">847</div>
+          <div class="stat-label">Cars Tonight</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">12/15</div>
+          <div class="stat-label">Tasks Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Staff On</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$2,450</div>
+          <div class="stat-label">Sales</div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">📢 Daily Briefing</h3>
+          <span style="font-size: 12px; color: var(--text-dim);">Today, 5:30 PM</span>
+        </div>
+        <div class="section-body">
+          <p style="font-size: 14px; line-height: 1.6;">
+            <strong>Tonight's Focus:</strong> It's Saturday peak night — expect 900+ cars. 
+            Push the Blitzen Bundle hard tonight. New shipment of plushies arrived, stock is good.
+            Weather looking clear, 52°F. Off-duty officer arrives at 6PM.
+            <br><br>
+            <strong>⚠️ Heads up:</strong> Section 4 lights were flickering yesterday. Tech team is aware.
+          </p>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">⚡ Priority Tasks</h3>
+        </div>
+        <div class="section-body">
+          <div class="task-item">
+            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+              <div class="task-title">Count opening cash drawer</div>
+              <div class="task-meta">Due by 5:45 PM</div>
+            </div>
+            <span class="task-priority priority-high">High</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+              <div class="task-title">Check mascot costume condition</div>
+              <div class="task-meta">Before first rotation</div>
+            </div>
+            <span class="task-priority priority-high">High</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
+            <div class="task-content completed">
+              <div class="task-title">Restock popcorn supplies</div>
+              <div class="task-meta">Completed 4:30 PM</div>
+            </div>
+            <span class="task-priority priority-medium">Med</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🐻‍❄️ Mascot Status</h3>
+          <span style="font-size: 13px; color: var(--teal);">Next swap in 12:45</span>
+        </div>
+        <div class="section-body">
+          <div class="mascot-grid">
+            <div class="mascot-card active">
+              <div class="mascot-icon">🐻‍❄️</div>
+              <div class="mascot-name">DJ Polar Ice</div>
+              <div class="mascot-person">Sarah M.</div>
+              <span class="mascot-status active">Active</span>
+            </div>
+            <div class="mascot-card active">
+              <div class="mascot-icon">🐧</div>
+              <div class="mascot-name">Pixel Penguin</div>
+              <div class="mascot-person">Mike T.</div>
+              <span class="mascot-status active">Active</span>
+            </div>
+            <div class="mascot-card on-break">
+              <div class="mascot-icon">☕</div>
+              <div class="mascot-name">On Break</div>
+              <div class="mascot-person">Jake R.</div>
+              <span class="mascot-status break">Break</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tasks Page -->
+    <div class="page" id="tasks">
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">✅ My Tasks Today</h3>
+          <span style="color: var(--teal); font-size: 14px; font-weight: 600;">12/15 Complete</span>
+        </div>
+        <div class="section-body">
+          <div class="task-item">
+            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+              <div class="task-title">Count opening cash drawer</div>
+              <div class="task-meta">$500 starting float</div>
+            </div>
+            <span class="task-priority priority-high">High</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+              <div class="task-title">Verify all staff checked in</div>
+              <div class="task-meta">8 staff scheduled tonight</div>
+            </div>
+            <span class="task-priority priority-high">High</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+              <div class="task-title">Test ticket scanner</div>
+              <div class="task-meta">Scan test QR code</div>
+            </div>
+            <span class="task-priority priority-medium">Med</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
+            <div class="task-content completed">
+              <div class="task-title">Set up merch display</div>
+              <div class="task-meta">Plushies front and center</div>
+            </div>
+            <span class="task-priority priority-medium">Med</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
+            <div class="task-content completed">
+              <div class="task-title">Turn on tent audio</div>
+              <div class="task-meta">Holiday Mix 1</div>
+            </div>
+            <span class="task-priority priority-low">Low</span>
+          </div>
+          <div class="task-item">
+            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
+            <div class="task-content completed">
+              <div class="task-title">Restock popcorn supplies</div>
+              <div class="task-meta">Check kernel bags</div>
+            </div>
+            <span class="task-priority priority-medium">Med</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Staff Page -->
+    <div class="page" id="staff">
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">👥 Tonight's Team</h3>
+          <span style="color: var(--green); font-size: 13px;">8 On Duty</span>
+        </div>
+        <div class="section-body">
+          <div class="staff-grid">
+            <div class="staff-card">
+              <div class="staff-avatar">MG</div>
+              <div class="staff-info">
+                <h4>Maria Garcia</h4>
+                <p>Tent Manager</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">SM</div>
+              <div class="staff-info">
+                <h4>Sarah Miller</h4>
+                <p>Mascot</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">MT</div>
+              <div class="staff-info">
+                <h4>Mike Thompson</h4>
+                <p>Mascot</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">JR</div>
+              <div class="staff-info">
+                <h4>Jake Roberts</h4>
+                <p>Mascot (Break)</p>
+              </div>
+              <div class="staff-status status-break"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">AL</div>
+              <div class="staff-info">
+                <h4>Amy Lee</h4>
+                <p>Ticket Scanner</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">TC</div>
+              <div class="staff-info">
+                <h4>Tom Chen</h4>
+                <p>Merch</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">RJ</div>
+              <div class="staff-info">
+                <h4>Rosa Johnson</h4>
+                <p>Concessions</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">DW</div>
+              <div class="staff-info">
+                <h4>Derek Williams</h4>
+                <p>Traffic</p>
+              </div>
+              <div class="staff-status status-active"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mascots Page -->
+    <div class="page" id="mascots">
+      <div class="mascot-timer">
+        <h3>NEXT ROTATION IN</h3>
+        <div class="mascot-countdown" id="mascotTimer">12:45</div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🎭 Current Rotation</h3>
+          <button style="background: var(--purple); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer;">
+            Swap Now
+          </button>
+        </div>
+        <div class="section-body">
+          <div class="mascot-grid">
+            <div class="mascot-card active">
+              <div class="mascot-icon">🐻‍❄️</div>
+              <div class="mascot-name">DJ Polar Ice</div>
+              <div class="mascot-person">Sarah Miller</div>
+              <span class="mascot-status active">In Costume</span>
+            </div>
+            <div class="mascot-card active">
+              <div class="mascot-icon">🐧</div>
+              <div class="mascot-name">Pixel Penguin</div>
+              <div class="mascot-person">Mike Thompson</div>
+              <span class="mascot-status active">In Costume</span>
+            </div>
+            <div class="mascot-card on-break">
+              <div class="mascot-icon">☕</div>
+              <div class="mascot-name">Break</div>
+              <div class="mascot-person">Jake Roberts</div>
+              <span class="mascot-status break">Resting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">📋 Rotation Schedule</h3>
+        </div>
+        <div class="section-body">
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">6:00 PM - 6:30 PM</div>
+              <div class="task-meta">🐻‍❄️ Sarah | 🐧 Mike | ☕ Jake</div>
+            </div>
+            <span style="color: var(--green); font-size: 13px;">Current</span>
+          </div>
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">6:30 PM - 7:00 PM</div>
+              <div class="task-meta">🐻‍❄️ Mike | 🐧 Jake | ☕ Sarah</div>
+            </div>
+            <span style="color: var(--text-dim); font-size: 13px;">Next</span>
+          </div>
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">7:00 PM - 7:30 PM</div>
+              <div class="task-meta">🐻‍❄️ Jake | 🐧 Sarah | ☕ Mike</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Inventory Page -->
+    <div class="page" id="inventory">
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🛍️ Merch Stock</h3>
+        </div>
+        <div class="section-body">
+          <div class="inventory-item">
+            <span class="inventory-name">🐻‍❄️ DJ Polar Ice Plush</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 85%;"></div></div>
+              <span class="stock-count">42</span>
+            </div>
+          </div>
+          <div class="inventory-item">
+            <span class="inventory-name">📖 Storybook</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 70%;"></div></div>
+              <span class="stock-count">28</span>
+            </div>
+          </div>
+          <div class="inventory-item">
+            <span class="inventory-name">🪄 Light Wands</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-medium" style="width: 35%;"></div></div>
+              <span class="stock-count">18</span>
+            </div>
+          </div>
+          <div class="inventory-item">
+            <span class="inventory-name">✨ Magic Glasses</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-low" style="width: 15%;"></div></div>
+              <span class="stock-count">12</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🍿 Concession Supplies</h3>
+        </div>
+        <div class="section-body">
+          <div class="inventory-item">
+            <span class="inventory-name">Popcorn Kernels</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 90%;"></div></div>
+              <span class="stock-count">Full</span>
+            </div>
+          </div>
+          <div class="inventory-item">
+            <span class="inventory-name">Lemonade Mix</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-medium" style="width: 45%;"></div></div>
+              <span class="stock-count">Med</span>
+            </div>
+          </div>
+          <div class="inventory-item">
+            <span class="inventory-name">Cotton Candy Sugar</span>
+            <div class="inventory-stock">
+              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 75%;"></div></div>
+              <span class="stock-count">Good</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cash Page -->
+    <div class="page" id="cash">
+      <div class="cash-summary">
+        <div class="cash-box">
+          <h4>Starting Float</h4>
+          <div class="amount">$500.00</div>
+        </div>
+        <div class="cash-box">
+          <h4>Cash Received</h4>
+          <div class="amount positive">+$245.00</div>
+        </div>
+        <div class="cash-box">
+          <h4>Expected Total</h4>
+          <div class="amount">$745.00</div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">💵 Cash Transactions</h3>
+          <button style="background: var(--purple); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer;">
+            + Add Entry
+          </button>
+        </div>
+        <div class="section-body">
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">Cash sale - Blitzen Bundle</div>
+              <div class="task-meta">6:45 PM · Entered by MG</div>
+            </div>
+            <span style="color: var(--green); font-weight: 600;">+$29.99</span>
+          </div>
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">Cash sale - 2x Popcorn</div>
+              <div class="task-meta">6:32 PM · Entered by MG</div>
+            </div>
+            <span style="color: var(--green); font-weight: 600;">+$19.98</span>
+          </div>
+          <div class="task-item">
+            <div class="task-content">
+              <div class="task-title">Cash sale - Plush + Wand</div>
+              <div class="task-meta">6:15 PM · Entered by MG</div>
+            </div>
+            <span style="color: var(--green); font-weight: 600;">+$32.98</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Music Page -->
+    <div class="page" id="music">
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🎵 Tent Audio</h3>
+        </div>
+        <div class="section-body">
+          <div class="music-player">
+            <div class="now-playing">NOW PLAYING</div>
+            <div class="song-title">All I Want for Christmas Is You</div>
+            <div class="song-artist">Mariah Carey</div>
+            <div class="music-controls">
+              <button class="music-btn">⏮</button>
+              <button class="music-btn play">▶</button>
+              <button class="music-btn">⏭</button>
+            </div>
+            <div class="playlist-selector">
+              <select>
+                <option>🎄 Holiday Mix 1 - Classic Christmas</option>
+                <option>🎅 Holiday Mix 2 - Modern Christmas</option>
+                <option>❄️ Holiday Mix 3 - Instrumental</option>
+                <option>🎁 Holiday Mix 4 - Upbeat Party</option>
+                <option>⛄ Holiday Mix 5 - Country Christmas</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contacts Page -->
+    <div class="page" id="contacts">
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">🚨 Emergency Contacts</h3>
+        </div>
+        <div class="section-body">
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(239, 68, 68, 0.2);">👮</div>
+            <div class="contact-info">
+              <h4>Off-Duty Officer</h4>
+              <p>Officer Martinez · On-site 6PM-11PM</p>
+            </div>
+            <button class="contact-action">Call</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(234, 179, 8, 0.2);">🔒</div>
+            <div class="contact-info">
+              <h4>Overnight Security</h4>
+              <p>SecureGuard Inc.</p>
+            </div>
+            <button class="contact-action">Call</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(168, 85, 247, 0.2);">🔧</div>
+            <div class="contact-info">
+              <h4>Show Tech Team</h4>
+              <p>Report prop/light issues</p>
+            </div>
+            <button class="contact-action">Message</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(6, 214, 160, 0.2);">📞</div>
+            <div class="contact-info">
+              <h4>Venue Contact</h4>
+              <p>Katy Mills Management</p>
+            </div>
+            <button class="contact-action">Call</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-header">
+          <h3 class="section-title">📋 Quick Links</h3>
+        </div>
+        <div class="section-body">
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(236, 72, 153, 0.2);">🚨</div>
+            <div class="contact-info">
+              <h4>Emergency Procedures</h4>
+              <p>Fire, medical, weather, security</p>
+            </div>
+            <button class="contact-action">View</button>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon" style="background: rgba(59, 130, 246, 0.2);">📝</div>
+            <div class="contact-info">
+              <h4>Report Incident</h4>
+              <p>Log complaints or issues</p>
+            </div>
+            <button class="contact-action">Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+  
+  <!-- FAB -->
+  <button class="fab">+</button>
+  
+  <script>
+    // Splash screen
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hidden');
+    }, 1500);
+    
+    // Navigation
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      event.target.classList.add('active');
+    }
+    
+    // Task toggle
+    function toggleTask(el) {
+      el.classList.toggle('checked');
+      el.closest('.task-item').classList.toggle('completed');
+    }
+    
+    // Mascot timer
+    let seconds = 765; // 12:45
+    setInterval(() => {
+      seconds--;
+      if (seconds < 0) seconds = 1800; // Reset to 30 min
+      const min = Math.floor(seconds / 60);
+      const sec = seconds % 60;
+      document.getElementById('mascotTimer').textContent = 
+        `${min}:${sec.toString().padStart(2, '0')}`;
+    }, 1000);
+  </script>
+</body>
+</html>
