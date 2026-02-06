@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tent Manager | The Light Park</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0a0a0f;
@@ -26,7 +24,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -44,7 +42,6 @@
       z-index: 9999;
       transition: opacity 0.5s;
     }
-    
     #splash.hidden { opacity: 0; pointer-events: none; }
     #splash img { max-width: 80%; max-height: 40vh; }
     
@@ -52,7 +49,7 @@
     .header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 16px 20px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -67,1098 +64,834 @@
       gap: 12px;
     }
     
-    .header-logo {
-      height: 36px;
-    }
+    .header-logo { height: 32px; }
     
-    .venue-selector {
+    .venue-select {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 8px 12px;
       color: var(--text);
       font-size: 14px;
-      font-family: inherit;
-      cursor: pointer;
     }
     
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .live-badge {
+      background: var(--red);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      animation: pulse 2s infinite;
     }
     
-    .weather-badge {
-      background: var(--surface2);
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
     }
     
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--teal));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    
-    /* Navigation */
-    .nav {
+    /* Tabs */
+    .tabs {
       display: flex;
       gap: 4px;
-      padding: 12px 16px;
+      padding: 12px 20px;
       background: var(--surface);
       overflow-x: auto;
-      border-bottom: 1px solid var(--border);
     }
     
-    .nav-btn {
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: none;
+    .tab {
+      padding: 10px 18px;
       background: transparent;
+      border: none;
       color: var(--text-dim);
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      border-radius: 8px;
       white-space: nowrap;
       transition: all 0.2s;
     }
     
-    .nav-btn:hover { background: var(--surface2); color: var(--text); }
-    .nav-btn.active { background: var(--purple); color: #fff; }
+    .tab:hover { background: var(--surface2); color: var(--text); }
+    .tab.active { background: var(--purple); color: white; }
     
-    /* Main Content */
-    .main {
+    /* Content */
+    .content {
       padding: 20px;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     
-    .page { display: none; }
-    .page.active { display: block; }
-    
-    /* Section */
-    .section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    
-    .section-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
     .section-title {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     
-    .section-body {
-      padding: 16px 20px;
-    }
-    
-    /* Task List */
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .task-item:last-child { border-bottom: none; }
-    
-    .task-checkbox {
-      width: 24px;
-      height: 24px;
-      border: 2px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-    
-    .task-checkbox:hover { border-color: var(--purple); }
-    .task-checkbox.checked { background: var(--green); border-color: var(--green); }
-    .task-checkbox.checked::after { content: '✓'; color: #fff; font-size: 14px; }
-    
-    .task-content { flex: 1; }
-    .task-title { font-size: 14px; font-weight: 500; }
-    .task-meta { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
-    .task-item.completed .task-title { text-decoration: line-through; color: var(--text-dim); }
-    
-    .task-priority {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 500;
-    }
-    
-    .priority-high { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-    .priority-medium { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
-    .priority-low { background: rgba(34, 197, 94, 0.2); color: var(--green); }
-    
-    /* Staff Grid */
-    .staff-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
-    }
-    
-    .staff-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .staff-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 16px;
-    }
-    
-    .staff-info h4 { font-size: 14px; font-weight: 600; }
-    .staff-info p { font-size: 12px; color: var(--text-dim); }
-    
-    .staff-status {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-left: auto;
-    }
-    
-    .status-active { background: var(--green); }
-    .status-break { background: var(--yellow); }
-    .status-off { background: var(--text-dim); }
-    
-    /* Mascot Rotation */
-    .mascot-timer {
-      text-align: center;
-      padding: 24px;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(6, 214, 160, 0.1));
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .mascot-timer h3 {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin-bottom: 8px;
-    }
-    
-    .mascot-countdown {
-      font-size: 48px;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--purple), var(--teal));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .mascot-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    
-    .mascot-card {
-      background: var(--surface2);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-    
-    .mascot-card.active {
-      border: 2px solid var(--green);
-      background: rgba(34, 197, 94, 0.1);
-    }
-    
-    .mascot-card.on-break {
-      border: 2px solid var(--yellow);
-      background: rgba(234, 179, 8, 0.1);
-    }
-    
-    .mascot-icon { font-size: 32px; margin-bottom: 8px; }
-    .mascot-name { font-weight: 600; font-size: 14px; }
-    .mascot-person { font-size: 12px; color: var(--text-dim); }
-    .mascot-status { font-size: 11px; margin-top: 6px; padding: 4px 8px; border-radius: 4px; display: inline-block; }
-    .mascot-status.active { background: rgba(34, 197, 94, 0.2); color: var(--green); }
-    .mascot-status.break { background: rgba(234, 179, 8, 0.2); color: var(--yellow); }
-    
-    /* Quick Stats */
+    /* Stats Row */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
     }
     
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
-      text-align: center;
+      padding: 20px;
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
     }
     
     .stat-value {
       font-size: 28px;
       font-weight: 700;
-      color: var(--teal);
     }
     
-    .stat-label {
+    .stat-change {
       font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 4px;
+      margin-top: 8px;
     }
     
-    /* Contact Cards */
-    .contact-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      background: var(--surface2);
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
+    .stat-change.up { color: var(--green); }
+    .stat-change.down { color: var(--red); }
     
-    .contact-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-    
-    .contact-info h4 { font-size: 14px; font-weight: 600; }
-    .contact-info p { font-size: 13px; color: var(--text-dim); }
-    
-    .contact-action {
-      margin-left: auto;
-      padding: 8px 16px;
-      background: var(--purple);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    
-    /* Inventory */
-    .inventory-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    .inventory-item:last-child { border-bottom: none; }
-    
-    .inventory-name { font-size: 14px; }
-    
-    .inventory-stock {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .stock-bar {
-      width: 100px;
-      height: 8px;
-      background: var(--surface2);
-      border-radius: 4px;
+    /* Leaderboard */
+    .leaderboard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       overflow: hidden;
     }
     
-    .stock-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.3s;
+    .leaderboard-header {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      padding: 16px 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
-    .stock-high { background: var(--green); }
-    .stock-medium { background: var(--yellow); }
-    .stock-low { background: var(--red); }
-    
-    .stock-count {
-      font-size: 13px;
-      font-weight: 500;
-      min-width: 50px;
-      text-align: right;
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
     }
     
-    /* Cash Log */
-    .cash-summary {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
+    .leaderboard-row:hover { background: var(--surface2); }
+    .leaderboard-row:last-child { border-bottom: none; }
+    
+    .rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 14px;
     }
     
-    .cash-box {
-      background: var(--surface2);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
+    .rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
+    .rank.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); color: #000; }
+    .rank.bronze { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
+    .rank.other { background: var(--surface2); color: var(--text-dim); }
+    
+    .employee-name {
+      flex: 1;
+      font-weight: 600;
     }
     
-    .cash-box h4 {
+    .employee-tent {
       font-size: 12px;
       color: var(--text-dim);
-      margin-bottom: 4px;
     }
     
-    .cash-box .amount {
-      font-size: 24px;
+    .sales-count {
+      font-size: 18px;
       font-weight: 700;
+      color: var(--teal);
     }
     
-    .amount.positive { color: var(--green); }
-    .amount.negative { color: var(--red); }
+    .sales-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-left: 4px;
+    }
     
-    /* Music Player */
-    .music-player {
-      background: linear-gradient(135deg, var(--surface2), var(--surface));
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
       text-align: center;
     }
     
-    .now-playing {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-bottom: 8px;
+    .product-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
     }
     
-    .song-title {
-      font-size: 18px;
+    .product-name {
       font-weight: 600;
       margin-bottom: 4px;
     }
     
-    .song-artist {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin-bottom: 16px;
+    .product-sold {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--teal);
     }
     
-    .music-controls {
-      display: flex;
-      justify-content: center;
+    .product-goal {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    
+    .product-progress {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .product-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--green));
+      border-radius: 3px;
+      transition: width 0.5s;
+    }
+    
+    /* Tents Grid */
+    .tents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 16px;
     }
     
-    .music-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: none;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .music-btn:hover { background: var(--purple); }
-    .music-btn.play { background: var(--purple); width: 56px; height: 56px; font-size: 24px; }
-    
-    .playlist-selector {
-      margin-top: 16px;
-    }
-    
-    .playlist-selector select {
-      width: 100%;
-      padding: 12px;
+    .tent-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .tent-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .tent-name {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tent-status {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .tent-status.open { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+    .tent-status.busy { background: rgba(249, 115, 22, 0.2); color: var(--orange); }
+    .tent-status.closed { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+    
+    .tent-body { padding: 16px; }
+    
+    .tent-stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
       font-size: 14px;
-      font-family: inherit;
     }
     
-    /* Floating Action Button */
-    .fab {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--teal));
+    .tent-stat-label { color: var(--text-dim); }
+    .tent-stat-value { font-weight: 600; }
+    
+    .tent-crew {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    
+    .crew-badge {
+      background: var(--surface2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    
+    /* Inventory Alerts */
+    .alerts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .alert-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .alert-item.urgent {
+      border-color: var(--red);
+      background: rgba(239, 68, 68, 0.1);
+    }
+    
+    .alert-item.warning {
+      border-color: var(--orange);
+      background: rgba(249, 115, 22, 0.1);
+    }
+    
+    .alert-icon { font-size: 20px; }
+    .alert-text { flex: 1; }
+    .alert-time { font-size: 12px; color: var(--text-dim); }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
       border: none;
-      color: #fff;
-      font-size: 24px;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
-      transition: all 0.2s;
+      font-size: 13px;
     }
     
-    .fab:hover { transform: scale(1.1); }
-    
-    /* Responsive */
-    @media (max-width: 600px) {
-      .header { flex-wrap: wrap; gap: 12px; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .mascot-grid { grid-template-columns: 1fr; }
-      .cash-summary { grid-template-columns: 1fr; }
+    .btn-primary {
+      background: var(--purple);
+      color: white;
     }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    
+    /* Two Column Layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    
+    @media (max-width: 900px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+    
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
+  <!-- Splash -->
   <div id="splash">
     <img src="logo.jpg" alt="Tent Manager">
   </div>
   
   <!-- Header -->
-  <header class="header">
+  <div class="header">
     <div class="header-left">
-      <img src="logo.jpg" alt="Tent Manager" class="header-logo">
-      <select class="venue-selector" id="venueSelect">
-        <option>Katy</option>
-        <option>Spring</option>
-        <option>Selma</option>
-        <option>Missions</option>
-        <option>Arlington</option>
-        <option>Frisco</option>
-        <option>Round Rock</option>
-        <option>Oklahoma City</option>
+      <img src="logo.jpg" alt="" class="header-logo">
+      <select class="venue-select">
+        <option>📍 Katy</option>
+        <option>📍 Spring</option>
+        <option>📍 Frisco</option>
+        <option>📍 Arlington</option>
+        <option>📍 Round Rock</option>
+        <option>📍 Selma</option>
+        <option>📍 Missions</option>
+        <option>📍 OKC</option>
       </select>
     </div>
     <div class="header-right">
-      <div class="weather-badge">
-        <span>🌙</span>
-        <span>52°F</span>
-      </div>
-        <div class="user-avatar">MG</div>
+      <span class="live-badge">● LIVE</span>
     </div>
-  </header>
+  </div>
   
-  <!-- Navigation -->
-  <nav class="nav">
-    <button class="nav-btn active" onclick="showPage('dashboard')">📊 Dashboard</button>
-    <button class="nav-btn" onclick="showPage('tasks')">✅ My Tasks</button>
-    <button class="nav-btn" onclick="showPage('staff')">👥 Staff</button>
-    <button class="nav-btn" onclick="showPage('mascots')">🐻‍❄️ Mascots</button>
-    <button class="nav-btn" onclick="showPage('inventory')">📦 Inventory</button>
-    <button class="nav-btn" onclick="showPage('cash')">💵 Cash</button>
-    <button class="nav-btn" onclick="showPage('music')">🎵 Music</button>
-    <button class="nav-btn" onclick="showPage('contacts')">📞 Contacts</button>
-  </nav>
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+    <button class="tab" onclick="showTab('sales')">💰 Sales & Rewards</button>
+    <button class="tab" onclick="showTab('tents')">🎪 Tents</button>
+    <button class="tab" onclick="showTab('inventory')">📦 Inventory</button>
+    <button class="tab" onclick="showTab('staff')">👥 Staff</button>
+    <button class="tab" onclick="showTab('alerts')">🔔 Alerts</button>
+  </div>
   
-  <!-- Main Content -->
-  <main class="main">
+  <!-- Dashboard Tab -->
+  <div class="content" id="tab-dashboard">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Tonight's Sales</div>
+        <div class="stat-value" style="color: var(--teal);">$4,832</div>
+        <div class="stat-change up">↑ 18% vs last Friday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Blitzen Bundles Sold</div>
+        <div class="stat-value" style="color: var(--purple);">127</div>
+        <div class="stat-change up">↑ 23 more than goal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Staff Clocked In</div>
+        <div class="stat-value">24</div>
+        <div class="stat-change">of 26 scheduled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Alerts</div>
+        <div class="stat-value" style="color: var(--orange);">3</div>
+        <div class="stat-change">2 inventory, 1 staffing</div>
+      </div>
+    </div>
     
-    <!-- Dashboard Page -->
-    <div class="page active" id="dashboard">
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-value">847</div>
-          <div class="stat-label">Cars Tonight</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">12/15</div>
-          <div class="stat-label">Tasks Done</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">8</div>
-          <div class="stat-label">Staff On</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">$2,450</div>
-          <div class="stat-label">Sales</div>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">📢 Daily Briefing</h3>
-          <span style="font-size: 12px; color: var(--text-dim);">Today, 5:30 PM</span>
-        </div>
-        <div class="section-body">
-          <p style="font-size: 14px; line-height: 1.6;">
-            <strong>Tonight's Focus:</strong> It's Saturday peak night — expect 900+ cars. 
-            Push the Blitzen Bundle hard tonight. New shipment of plushies arrived, stock is good.
-            Weather looking clear, 52°F. Off-duty officer arrives at 6PM.
-            <br><br>
-            <strong>⚠️ Heads up:</strong> Section 4 lights were flickering yesterday. Tech team is aware.
-          </p>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">⚡ Priority Tasks</h3>
-        </div>
-        <div class="section-body">
-          <div class="task-item">
-            <div class="task-checkbox" onclick="toggleTask(this)"></div>
-            <div class="task-content">
-              <div class="task-title">Count opening cash drawer</div>
-              <div class="task-meta">Due by 5:45 PM</div>
-            </div>
-            <span class="task-priority priority-high">High</span>
+    <div class="two-col">
+      <div>
+        <div class="section-title">🏆 Tonight's Top Sellers</div>
+        <div class="leaderboard">
+          <div class="leaderboard-header">🔥 Sales Leaderboard — Live</div>
+          <div class="leaderboard-row">
+            <div class="rank gold">1</div>
+            <div class="employee-name">Maria G. <span class="employee-tent">Photo Tent</span></div>
+            <div class="sales-count">$892 <span class="sales-label">sales</span></div>
           </div>
-          <div class="task-item">
-            <div class="task-checkbox" onclick="toggleTask(this)"></div>
-            <div class="task-content">
-              <div class="task-title">Check mascot costume condition</div>
-              <div class="task-meta">Before first rotation</div>
-            </div>
-            <span class="task-priority priority-high">High</span>
+          <div class="leaderboard-row">
+            <div class="rank silver">2</div>
+            <div class="employee-name">Jake T. <span class="employee-tent">Hot Cocoa</span></div>
+            <div class="sales-count">$734 <span class="sales-label">sales</span></div>
           </div>
-          <div class="task-item">
-            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
-            <div class="task-content completed">
-              <div class="task-title">Restock popcorn supplies</div>
-              <div class="task-meta">Completed 4:30 PM</div>
-            </div>
-            <span class="task-priority priority-medium">Med</span>
+          <div class="leaderboard-row">
+            <div class="rank bronze">3</div>
+            <div class="employee-name">Ashley R. <span class="employee-tent">Merch Tent</span></div>
+            <div class="sales-count">$621 <span class="sales-label">sales</span></div>
+          </div>
+          <div class="leaderboard-row">
+            <div class="rank other">4</div>
+            <div class="employee-name">Derek M. <span class="employee-tent">S'mores</span></div>
+            <div class="sales-count">$445 <span class="sales-label">sales</span></div>
+          </div>
+          <div class="leaderboard-row">
+            <div class="rank other">5</div>
+            <div class="employee-name">Kim L. <span class="employee-tent">Photo Tent</span></div>
+            <div class="sales-count">$398 <span class="sales-label">sales</span></div>
           </div>
         </div>
       </div>
       
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🐻‍❄️ Mascot Status</h3>
-          <span style="font-size: 13px; color: var(--teal);">Next swap in 12:45</span>
-        </div>
-        <div class="section-body">
-          <div class="mascot-grid">
-            <div class="mascot-card active">
-              <div class="mascot-icon">🐻‍❄️</div>
-              <div class="mascot-name">DJ Polar Ice</div>
-              <div class="mascot-person">Sarah M.</div>
-              <span class="mascot-status active">Active</span>
+      <div>
+        <div class="section-title">🎁 Product Goals — Tonight</div>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-icon">🎁</div>
+            <div class="product-name">Blitzen Bundle</div>
+            <div class="product-sold">127</div>
+            <div class="product-goal">Goal: 100</div>
+            <div class="product-progress">
+              <div class="product-progress-bar" style="width: 100%;"></div>
             </div>
-            <div class="mascot-card active">
-              <div class="mascot-icon">🐧</div>
-              <div class="mascot-name">Pixel Penguin</div>
-              <div class="mascot-person">Mike T.</div>
-              <span class="mascot-status active">Active</span>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">🍿</div>
+            <div class="product-name">Popcorn</div>
+            <div class="product-sold">89</div>
+            <div class="product-goal">Goal: 120</div>
+            <div class="product-progress">
+              <div class="product-progress-bar" style="width: 74%;"></div>
             </div>
-            <div class="mascot-card on-break">
-              <div class="mascot-icon">☕</div>
-              <div class="mascot-name">On Break</div>
-              <div class="mascot-person">Jake R.</div>
-              <span class="mascot-status break">Break</span>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">☕</div>
+            <div class="product-name">Hot Cocoa</div>
+            <div class="product-sold">203</div>
+            <div class="product-goal">Goal: 150</div>
+            <div class="product-progress">
+              <div class="product-progress-bar" style="width: 100%;"></div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">🔥</div>
+            <div class="product-name">S'mores Kit</div>
+            <div class="product-sold">67</div>
+            <div class="product-goal">Goal: 80</div>
+            <div class="product-progress">
+              <div class="product-progress-bar" style="width: 84%;"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-    <!-- Tasks Page -->
-    <div class="page" id="tasks">
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">✅ My Tasks Today</h3>
-          <span style="color: var(--teal); font-size: 14px; font-weight: 600;">12/15 Complete</span>
-        </div>
-        <div class="section-body">
-          <div class="task-item">
-            <div class="task-checkbox" onclick="toggleTask(this)"></div>
-            <div class="task-content">
-              <div class="task-title">Count opening cash drawer</div>
-              <div class="task-meta">$500 starting float</div>
-            </div>
-            <span class="task-priority priority-high">High</span>
-          </div>
-          <div class="task-item">
-            <div class="task-checkbox" onclick="toggleTask(this)"></div>
-            <div class="task-content">
-              <div class="task-title">Verify all staff checked in</div>
-              <div class="task-meta">8 staff scheduled tonight</div>
-            </div>
-            <span class="task-priority priority-high">High</span>
-          </div>
-          <div class="task-item">
-            <div class="task-checkbox" onclick="toggleTask(this)"></div>
-            <div class="task-content">
-              <div class="task-title">Test ticket scanner</div>
-              <div class="task-meta">Scan test QR code</div>
-            </div>
-            <span class="task-priority priority-medium">Med</span>
-          </div>
-          <div class="task-item">
-            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
-            <div class="task-content completed">
-              <div class="task-title">Set up merch display</div>
-              <div class="task-meta">Plushies front and center</div>
-            </div>
-            <span class="task-priority priority-medium">Med</span>
-          </div>
-          <div class="task-item">
-            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
-            <div class="task-content completed">
-              <div class="task-title">Turn on tent audio</div>
-              <div class="task-meta">Holiday Mix 1</div>
-            </div>
-            <span class="task-priority priority-low">Low</span>
-          </div>
-          <div class="task-item">
-            <div class="task-checkbox checked" onclick="toggleTask(this)"></div>
-            <div class="task-content completed">
-              <div class="task-title">Restock popcorn supplies</div>
-              <div class="task-meta">Check kernel bags</div>
-            </div>
-            <span class="task-priority priority-medium">Med</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Staff Page -->
-    <div class="page" id="staff">
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">👥 Tonight's Team</h3>
-          <span style="color: var(--green); font-size: 13px;">8 On Duty</span>
-        </div>
-        <div class="section-body">
-          <div class="staff-grid">
-            <div class="staff-card">
-              <div class="staff-avatar">MG</div>
-              <div class="staff-info">
-                <h4>Maria Garcia</h4>
-                <p>Tent Manager</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">SM</div>
-              <div class="staff-info">
-                <h4>Sarah Miller</h4>
-                <p>Mascot</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">MT</div>
-              <div class="staff-info">
-                <h4>Mike Thompson</h4>
-                <p>Mascot</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">JR</div>
-              <div class="staff-info">
-                <h4>Jake Roberts</h4>
-                <p>Mascot (Break)</p>
-              </div>
-              <div class="staff-status status-break"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">AL</div>
-              <div class="staff-info">
-                <h4>Amy Lee</h4>
-                <p>Ticket Scanner</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">TC</div>
-              <div class="staff-info">
-                <h4>Tom Chen</h4>
-                <p>Merch</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">RJ</div>
-              <div class="staff-info">
-                <h4>Rosa Johnson</h4>
-                <p>Concessions</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-            <div class="staff-card">
-              <div class="staff-avatar">DW</div>
-              <div class="staff-info">
-                <h4>Derek Williams</h4>
-                <p>Traffic</p>
-              </div>
-              <div class="staff-status status-active"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Mascots Page -->
-    <div class="page" id="mascots">
-      <div class="mascot-timer">
-        <h3>NEXT ROTATION IN</h3>
-        <div class="mascot-countdown" id="mascotTimer">12:45</div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🎭 Current Rotation</h3>
-          <button style="background: var(--purple); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer;">
-            Swap Now
-          </button>
-        </div>
-        <div class="section-body">
-          <div class="mascot-grid">
-            <div class="mascot-card active">
-              <div class="mascot-icon">🐻‍❄️</div>
-              <div class="mascot-name">DJ Polar Ice</div>
-              <div class="mascot-person">Sarah Miller</div>
-              <span class="mascot-status active">In Costume</span>
-            </div>
-            <div class="mascot-card active">
-              <div class="mascot-icon">🐧</div>
-              <div class="mascot-name">Pixel Penguin</div>
-              <div class="mascot-person">Mike Thompson</div>
-              <span class="mascot-status active">In Costume</span>
-            </div>
-            <div class="mascot-card on-break">
-              <div class="mascot-icon">☕</div>
-              <div class="mascot-name">Break</div>
-              <div class="mascot-person">Jake Roberts</div>
-              <span class="mascot-status break">Resting</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">📋 Rotation Schedule</h3>
-        </div>
-        <div class="section-body">
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">6:00 PM - 6:30 PM</div>
-              <div class="task-meta">🐻‍❄️ Sarah | 🐧 Mike | ☕ Jake</div>
-            </div>
-            <span style="color: var(--green); font-size: 13px;">Current</span>
-          </div>
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">6:30 PM - 7:00 PM</div>
-              <div class="task-meta">🐻‍❄️ Mike | 🐧 Jake | ☕ Sarah</div>
-            </div>
-            <span style="color: var(--text-dim); font-size: 13px;">Next</span>
-          </div>
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">7:00 PM - 7:30 PM</div>
-              <div class="task-meta">🐻‍❄️ Jake | 🐧 Sarah | ☕ Mike</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Inventory Page -->
-    <div class="page" id="inventory">
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🛍️ Merch Stock</h3>
-        </div>
-        <div class="section-body">
-          <div class="inventory-item">
-            <span class="inventory-name">🐻‍❄️ DJ Polar Ice Plush</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 85%;"></div></div>
-              <span class="stock-count">42</span>
-            </div>
-          </div>
-          <div class="inventory-item">
-            <span class="inventory-name">📖 Storybook</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 70%;"></div></div>
-              <span class="stock-count">28</span>
-            </div>
-          </div>
-          <div class="inventory-item">
-            <span class="inventory-name">🪄 Light Wands</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-medium" style="width: 35%;"></div></div>
-              <span class="stock-count">18</span>
-            </div>
-          </div>
-          <div class="inventory-item">
-            <span class="inventory-name">✨ Magic Glasses</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-low" style="width: 15%;"></div></div>
-              <span class="stock-count">12</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🍿 Concession Supplies</h3>
-        </div>
-        <div class="section-body">
-          <div class="inventory-item">
-            <span class="inventory-name">Popcorn Kernels</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 90%;"></div></div>
-              <span class="stock-count">Full</span>
-            </div>
-          </div>
-          <div class="inventory-item">
-            <span class="inventory-name">Lemonade Mix</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-medium" style="width: 45%;"></div></div>
-              <span class="stock-count">Med</span>
-            </div>
-          </div>
-          <div class="inventory-item">
-            <span class="inventory-name">Cotton Candy Sugar</span>
-            <div class="inventory-stock">
-              <div class="stock-bar"><div class="stock-fill stock-high" style="width: 75%;"></div></div>
-              <span class="stock-count">Good</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Cash Page -->
-    <div class="page" id="cash">
-      <div class="cash-summary">
-        <div class="cash-box">
-          <h4>Starting Float</h4>
-          <div class="amount">$500.00</div>
-        </div>
-        <div class="cash-box">
-          <h4>Cash Received</h4>
-          <div class="amount positive">+$245.00</div>
-        </div>
-        <div class="cash-box">
-          <h4>Expected Total</h4>
-          <div class="amount">$745.00</div>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">💵 Cash Transactions</h3>
-          <button style="background: var(--purple); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer;">
-            + Add Entry
-          </button>
-        </div>
-        <div class="section-body">
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">Cash sale - Blitzen Bundle</div>
-              <div class="task-meta">6:45 PM · Entered by MG</div>
-            </div>
-            <span style="color: var(--green); font-weight: 600;">+$29.99</span>
-          </div>
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">Cash sale - 2x Popcorn</div>
-              <div class="task-meta">6:32 PM · Entered by MG</div>
-            </div>
-            <span style="color: var(--green); font-weight: 600;">+$19.98</span>
-          </div>
-          <div class="task-item">
-            <div class="task-content">
-              <div class="task-title">Cash sale - Plush + Wand</div>
-              <div class="task-meta">6:15 PM · Entered by MG</div>
-            </div>
-            <span style="color: var(--green); font-weight: 600;">+$32.98</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Music Page -->
-    <div class="page" id="music">
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🎵 Tent Audio</h3>
-        </div>
-        <div class="section-body">
-          <div class="music-player">
-            <div class="now-playing">NOW PLAYING</div>
-            <div class="song-title">All I Want for Christmas Is You</div>
-            <div class="song-artist">Mariah Carey</div>
-            <div class="music-controls">
-              <button class="music-btn">⏮</button>
-              <button class="music-btn play">▶</button>
-              <button class="music-btn">⏭</button>
-            </div>
-            <div class="playlist-selector">
-              <select>
-                <option>🎄 Holiday Mix 1 - Classic Christmas</option>
-                <option>🎅 Holiday Mix 2 - Modern Christmas</option>
-                <option>❄️ Holiday Mix 3 - Instrumental</option>
-                <option>🎁 Holiday Mix 4 - Upbeat Party</option>
-                <option>⛄ Holiday Mix 5 - Country Christmas</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Contacts Page -->
-    <div class="page" id="contacts">
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">🚨 Emergency Contacts</h3>
-        </div>
-        <div class="section-body">
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(239, 68, 68, 0.2);">👮</div>
-            <div class="contact-info">
-              <h4>Off-Duty Officer</h4>
-              <p>Officer Martinez · On-site 6PM-11PM</p>
-            </div>
-            <button class="contact-action">Call</button>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(234, 179, 8, 0.2);">🔒</div>
-            <div class="contact-info">
-              <h4>Overnight Security</h4>
-              <p>SecureGuard Inc.</p>
-            </div>
-            <button class="contact-action">Call</button>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(168, 85, 247, 0.2);">🔧</div>
-            <div class="contact-info">
-              <h4>Show Tech Team</h4>
-              <p>Report prop/light issues</p>
-            </div>
-            <button class="contact-action">Message</button>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(6, 214, 160, 0.2);">📞</div>
-            <div class="contact-info">
-              <h4>Venue Contact</h4>
-              <p>Katy Mills Management</p>
-            </div>
-            <button class="contact-action">Call</button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="section">
-        <div class="section-header">
-          <h3 class="section-title">📋 Quick Links</h3>
-        </div>
-        <div class="section-body">
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(236, 72, 153, 0.2);">🚨</div>
-            <div class="contact-info">
-              <h4>Emergency Procedures</h4>
-              <p>Fire, medical, weather, security</p>
-            </div>
-            <button class="contact-action">View</button>
-          </div>
-          <div class="contact-card">
-            <div class="contact-icon" style="background: rgba(59, 130, 246, 0.2);">📝</div>
-            <div class="contact-info">
-              <h4>Report Incident</h4>
-              <p>Log complaints or issues</p>
-            </div>
-            <button class="contact-action">Report</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </main>
+  </div>
   
-  <!-- FAB -->
-  <button class="fab">+</button>
+  <!-- Sales & Rewards Tab -->
+  <div class="content hidden" id="tab-sales">
+    <div class="section-title">💰 Sales & Rewards Program</div>
+    
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Tonight's Bonus Pool</div>
+        <div class="stat-value" style="color: var(--green);">$250</div>
+        <div class="stat-change">Top 3 split it</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Rewards Paid This Season</div>
+        <div class="stat-value" style="color: var(--purple);">$3,420</div>
+        <div class="stat-change up">23 employees earned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Upsell Rate</div>
+        <div class="stat-value">34%</div>
+        <div class="stat-change up">↑ 8% from last week</div>
+      </div>
+    </div>
+    
+    <div class="section-title">🎯 Active Reward Challenges</div>
+    <div class="alerts-list" style="margin-bottom: 24px;">
+      <div class="alert-item" style="border-color: var(--teal);">
+        <div class="alert-icon">🏆</div>
+        <div class="alert-text">
+          <strong>Blitzen Bundle Bonus</strong><br>
+          <span style="color: var(--text-dim);">Sell 15 bundles tonight = +$25 cash</span>
+        </div>
+        <div style="color: var(--teal); font-weight: 700;">12 participating</div>
+      </div>
+      <div class="alert-item" style="border-color: var(--purple);">
+        <div class="alert-icon">⚡</div>
+        <div class="alert-text">
+          <strong>Streak Bonus</strong><br>
+          <span style="color: var(--text-dim);">3 upsells in a row = +$5 instant</span>
+        </div>
+        <div style="color: var(--purple); font-weight: 700;">Active now</div>
+      </div>
+      <div class="alert-item" style="border-color: var(--pink);">
+        <div class="alert-icon">👑</div>
+        <div class="alert-text">
+          <strong>Weekly Champion</strong><br>
+          <span style="color: var(--text-dim);">Top seller this week wins $100 + prime parking</span>
+        </div>
+        <div style="color: var(--pink); font-weight: 700;">3 days left</div>
+      </div>
+    </div>
+    
+    <div class="section-title">📊 Full Leaderboard</div>
+    <div class="leaderboard">
+      <div class="leaderboard-header">Season Rankings — All Venues</div>
+      <div class="leaderboard-row">
+        <div class="rank gold">1</div>
+        <div class="employee-name">Maria G. <span class="employee-tent">Katy - Photo</span></div>
+        <div class="sales-count">$12,340 <span class="sales-label">season</span></div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank silver">2</div>
+        <div class="employee-name">Carlos R. <span class="employee-tent">Frisco - Merch</span></div>
+        <div class="sales-count">$11,892 <span class="sales-label">season</span></div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank bronze">3</div>
+        <div class="employee-name">Jake T. <span class="employee-tent">Katy - Cocoa</span></div>
+        <div class="sales-count">$10,445 <span class="sales-label">season</span></div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank other">4</div>
+        <div class="employee-name">Ashley R. <span class="employee-tent">Spring - Merch</span></div>
+        <div class="sales-count">$9,234 <span class="sales-label">season</span></div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank other">5</div>
+        <div class="employee-name">Derek M. <span class="employee-tent">Katy - S'mores</span></div>
+        <div class="sales-count">$8,901 <span class="sales-label">season</span></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tents Tab -->
+  <div class="content hidden" id="tab-tents">
+    <div class="section-title">🎪 Tent Status</div>
+    <div class="tents-grid">
+      <div class="tent-card">
+        <div class="tent-header">
+          <div class="tent-name">📸 Photo Experience</div>
+          <div class="tent-status open">Open</div>
+        </div>
+        <div class="tent-body">
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Tonight's Sales</span>
+            <span class="tent-stat-value" style="color: var(--teal);">$1,234</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Photos Taken</span>
+            <span class="tent-stat-value">89</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Avg Wait Time</span>
+            <span class="tent-stat-value">4 min</span>
+          </div>
+          <div class="tent-crew">
+            <span class="crew-badge">👤 Maria G.</span>
+            <span class="crew-badge">👤 Kim L.</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tent-card">
+        <div class="tent-header">
+          <div class="tent-name">☕ Hot Cocoa Stand</div>
+          <div class="tent-status busy">Busy</div>
+        </div>
+        <div class="tent-body">
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Tonight's Sales</span>
+            <span class="tent-stat-value" style="color: var(--teal);">$892</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Cups Sold</span>
+            <span class="tent-stat-value">203</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Stock Level</span>
+            <span class="tent-stat-value" style="color: var(--orange);">Low</span>
+          </div>
+          <div class="tent-crew">
+            <span class="crew-badge">👤 Jake T.</span>
+            <span class="crew-badge">👤 Sarah M.</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tent-card">
+        <div class="tent-header">
+          <div class="tent-name">🛍️ Merch Tent</div>
+          <div class="tent-status open">Open</div>
+        </div>
+        <div class="tent-body">
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Tonight's Sales</span>
+            <span class="tent-stat-value" style="color: var(--teal);">$1,567</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Blitzen Bundles</span>
+            <span class="tent-stat-value">67</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Stock Level</span>
+            <span class="tent-stat-value" style="color: var(--green);">Good</span>
+          </div>
+          <div class="tent-crew">
+            <span class="crew-badge">👤 Ashley R.</span>
+            <span class="crew-badge">👤 Mike D.</span>
+            <span class="crew-badge">👤 Lisa P.</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tent-card">
+        <div class="tent-header">
+          <div class="tent-name">🔥 S'mores Station</div>
+          <div class="tent-status open">Open</div>
+        </div>
+        <div class="tent-body">
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Tonight's Sales</span>
+            <span class="tent-stat-value" style="color: var(--teal);">$534</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Kits Sold</span>
+            <span class="tent-stat-value">67</span>
+          </div>
+          <div class="tent-stat-row">
+            <span class="tent-stat-label">Fire Pits Active</span>
+            <span class="tent-stat-value">4 of 6</span>
+          </div>
+          <div class="tent-crew">
+            <span class="crew-badge">👤 Derek M.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Inventory Tab -->
+  <div class="content hidden" id="tab-inventory">
+    <div class="section-title">📦 Inventory Status</div>
+    <div class="alerts-list">
+      <div class="alert-item urgent">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-text">
+          <strong>Hot Cocoa Cups — CRITICAL</strong><br>
+          <span style="color: var(--text-dim);">Only 45 cups remaining. Restock NOW.</span>
+        </div>
+        <button class="btn btn-primary">Send Runner</button>
+      </div>
+      <div class="alert-item warning">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text">
+          <strong>S'mores Kits — Low</strong><br>
+          <span style="color: var(--text-dim);">~30 min supply at current pace.</span>
+        </div>
+        <button class="btn btn-outline">Request Restock</button>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">📦</div>
+        <div class="alert-text">
+          <strong>Blitzen Bundles — Good</strong><br>
+          <span style="color: var(--text-dim);">187 remaining. 2+ hours supply.</span>
+        </div>
+        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">📦</div>
+        <div class="alert-text">
+          <strong>Popcorn Bags — Good</strong><br>
+          <span style="color: var(--text-dim);">340 remaining.</span>
+        </div>
+        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">📦</div>
+        <div class="alert-text">
+          <strong>Glow Sticks — Good</strong><br>
+          <span style="color: var(--text-dim);">520 remaining.</span>
+        </div>
+        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Staff Tab -->
+  <div class="content hidden" id="tab-staff">
+    <div class="section-title">👥 Staff — Tonight</div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Clocked In</div>
+        <div class="stat-value" style="color: var(--green);">24</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">On Break</div>
+        <div class="stat-value" style="color: var(--orange);">3</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">No Show</div>
+        <div class="stat-value" style="color: var(--red);">2</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Labor Hours</div>
+        <div class="stat-value">142</div>
+      </div>
+    </div>
+    
+    <div class="leaderboard">
+      <div class="leaderboard-header">Staff Status</div>
+      <div class="leaderboard-row">
+        <div class="rank" style="background: var(--green);">✓</div>
+        <div class="employee-name">Maria G. <span class="employee-tent">Clocked in 5:02pm</span></div>
+        <div style="font-size: 13px; color: var(--text-dim);">Photo Tent</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank" style="background: var(--green);">✓</div>
+        <div class="employee-name">Jake T. <span class="employee-tent">Clocked in 4:58pm</span></div>
+        <div style="font-size: 13px; color: var(--text-dim);">Hot Cocoa</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank" style="background: var(--orange);">☕</div>
+        <div class="employee-name">Derek M. <span class="employee-tent">On break since 7:15pm</span></div>
+        <div style="font-size: 13px; color: var(--text-dim);">S'mores</div>
+      </div>
+      <div class="leaderboard-row">
+        <div class="rank" style="background: var(--red);">✗</div>
+        <div class="employee-name">Tyler B. <span class="employee-tent">No show — scheduled 5pm</span></div>
+        <div><button class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Contact</button></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Alerts Tab -->
+  <div class="content hidden" id="tab-alerts">
+    <div class="section-title">🔔 Live Alerts</div>
+    <div class="alerts-list">
+      <div class="alert-item urgent">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-text">
+          <strong>Hot Cocoa — Cups Critical</strong><br>
+          <span style="color: var(--text-dim);">Only 45 remaining. Runner dispatched.</span>
+        </div>
+        <div class="alert-time">2 min ago</div>
+      </div>
+      <div class="alert-item warning">
+        <div class="alert-icon">👤</div>
+        <div class="alert-text">
+          <strong>No Show — Tyler B.</strong><br>
+          <span style="color: var(--text-dim);">Scheduled for Merch at 5pm. Not clocked in.</span>
+        </div>
+        <div class="alert-time">1 hr ago</div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">🏆</div>
+        <div class="alert-text">
+          <strong>Bonus Unlocked!</strong><br>
+          <span style="color: var(--text-dim);">Maria G. hit 15 Blitzen Bundle sales — +$25 earned!</span>
+        </div>
+        <div class="alert-time">23 min ago</div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">📦</div>
+        <div class="alert-text">
+          <strong>Restock Complete</strong><br>
+          <span style="color: var(--text-dim);">Popcorn restocked at Merch Tent (200 bags)</span>
+        </div>
+        <div class="alert-time">45 min ago</div>
+      </div>
+      <div class="alert-item">
+        <div class="alert-icon">⚡</div>
+        <div class="alert-text">
+          <strong>Streak Bonus!</strong><br>
+          <span style="color: var(--text-dim);">Jake T. hit 3 upsells in a row — +$5</span>
+        </div>
+        <div class="alert-time">52 min ago</div>
+      </div>
+    </div>
+  </div>
   
   <script>
     // Splash screen
-    setTimeout(() => {
-      document.getElementById('splash').classList.add('hidden');
-    }, 1500);
+    setTimeout(() => document.getElementById('splash').classList.add('hidden'), 1500);
     
-    // === BACKUP FUNCTION (APP STANDARD) ===
-    function backupAllData() {
-      try {
-        const backup = {
-          version: '2026.02.06',
-          app: 'tent-manager',
-          exportedAt: new Date().toISOString(),
-          localStorage: JSON.stringify(localStorage)
-        };
-        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `tent-manager-backup-${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        alert('✅ Backup downloaded!');
-      } catch(e) { alert('Backup error: ' + e.message); }
-    }
-    
-    // Navigation
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+    // Tab switching
+    function showTab(tabId) {
+      document.querySelectorAll('.content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
       event.target.classList.add('active');
     }
-    
-    // Task toggle
-    function toggleTask(el) {
-      el.classList.toggle('checked');
-      el.closest('.task-item').classList.toggle('completed');
-    }
-    
-    // Mascot timer
-    let seconds = 765; // 12:45
-    setInterval(() => {
-      seconds--;
-      if (seconds < 0) seconds = 1800; // Reset to 30 min
-      const min = Math.floor(seconds / 60);
-      const sec = seconds % 60;
-      document.getElementById('mascotTimer').textContent = 
-        `${min}:${sec.toString().padStart(2, '0')}`;
-    }, 1000);
   </script>
 </body>
 </html>
