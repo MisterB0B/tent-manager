@@ -93,18 +93,19 @@
     /* Tabs */
     .tabs {
       display: flex;
-      gap: 4px;
-      padding: 12px 20px;
+      gap: 2px;
+      padding: 8px 12px;
       background: var(--surface);
       overflow-x: auto;
+      border-bottom: 1px solid var(--border);
     }
     
     .tab {
-      padding: 10px 18px;
+      padding: 10px 14px;
       background: transparent;
       border: none;
       color: var(--text-dim);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border-radius: 8px;
@@ -134,8 +135,8 @@
     /* Stats Row */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
       margin-bottom: 24px;
     }
     
@@ -143,244 +144,88 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px;
+      padding: 16px;
     }
     
     .stat-label {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-dim);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     
     .stat-value {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
     }
     
     .stat-change {
-      font-size: 12px;
-      margin-top: 8px;
+      font-size: 11px;
+      margin-top: 6px;
     }
     
     .stat-change.up { color: var(--green); }
     .stat-change.down { color: var(--red); }
+    .stat-change.warn { color: var(--orange); }
     
-    /* Leaderboard */
-    .leaderboard {
+    /* Cards */
+    .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      overflow: hidden;
-    }
-    
-    .leaderboard-header {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      padding: 16px 20px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .leaderboard-row {
-      display: flex;
-      align-items: center;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    
-    .leaderboard-row:hover { background: var(--surface2); }
-    .leaderboard-row:last-child { border-bottom: none; }
-    
-    .rank {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      margin-right: 14px;
-    }
-    
-    .rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000; }
-    .rank.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); color: #000; }
-    .rank.bronze { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
-    .rank.other { background: var(--surface2); color: var(--text-dim); }
-    
-    .employee-name {
-      flex: 1;
-      font-weight: 600;
-    }
-    
-    .employee-tent {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
-    
-    .sales-count {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--teal);
-    }
-    
-    .sales-label {
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-left: 4px;
-    }
-    
-    /* Product Grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    
-    .product-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-    
-    .product-icon {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-    
-    .product-name {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    
-    .product-sold {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--teal);
-    }
-    
-    .product-goal {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
-    
-    .product-progress {
-      height: 6px;
-      background: var(--surface2);
-      border-radius: 3px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    
-    .product-progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--teal), var(--green));
-      border-radius: 3px;
-      transition: width 0.5s;
-    }
-    
-    /* Tents Grid */
-    .tents-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
-    }
-    
-    .tent-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    
-    .tent-header {
       padding: 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      margin-bottom: 16px;
     }
     
-    .tent-name {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .card-title {
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 16px;
     }
     
-    .tent-status {
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
+    /* Tables */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
     }
     
-    .tent-status.open { background: rgba(34, 197, 94, 0.2); color: var(--green); }
-    .tent-status.busy { background: rgba(249, 115, 22, 0.2); color: var(--orange); }
-    .tent-status.closed { background: rgba(239, 68, 68, 0.2); color: var(--red); }
-    
-    .tent-body { padding: 16px; }
-    
-    .tent-stat-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
       font-size: 14px;
     }
     
-    .tent-stat-label { color: var(--text-dim); }
-    .tent-stat-value { font-weight: 600; }
-    
-    .tent-crew {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
+    .table th {
+      font-weight: 600;
+      color: var(--text-dim);
+      font-size: 12px;
+      text-transform: uppercase;
     }
     
-    .crew-badge {
-      background: var(--surface2);
+    .table tr:hover { background: var(--surface2); }
+    
+    /* Badges */
+    .badge {
+      display: inline-block;
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 600;
     }
     
-    /* Inventory Alerts */
-    .alerts-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .badge-green { background: rgba(34, 197, 94, 0.2); color: var(--green); }
+    .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+    .badge-orange { background: rgba(249, 115, 22, 0.2); color: var(--orange); }
+    .badge-purple { background: rgba(168, 85, 247, 0.2); color: var(--purple); }
+    .badge-teal { background: rgba(6, 214, 160, 0.2); color: var(--teal); }
     
-    .alert-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .alert-item.urgent {
-      border-color: var(--red);
-      background: rgba(239, 68, 68, 0.1);
-    }
-    
-    .alert-item.warning {
-      border-color: var(--orange);
-      background: rgba(249, 115, 22, 0.1);
-    }
-    
-    .alert-icon { font-size: 20px; }
-    .alert-text { flex: 1; }
-    .alert-time { font-size: 12px; color: var(--text-dim); }
-    
+    /* Buttons */
     .btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -388,28 +233,224 @@
       font-weight: 600;
       cursor: pointer;
       font-size: 13px;
+      transition: all 0.2s;
     }
     
-    .btn-primary {
-      background: var(--purple);
-      color: white;
+    .btn-primary { background: var(--purple); color: white; }
+    .btn-primary:hover { background: #9333ea; }
+    .btn-success { background: var(--green); color: white; }
+    .btn-danger { background: var(--red); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: var(--surface2); }
+    
+    /* Alerts List */
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface2);
+      border-radius: 8px;
+      margin-bottom: 8px;
     }
     
-    .btn-outline {
-      background: transparent;
+    .alert-item.urgent { border-left: 3px solid var(--red); }
+    .alert-item.warning { border-left: 3px solid var(--orange); }
+    .alert-item.info { border-left: 3px solid var(--teal); }
+    
+    .alert-icon { font-size: 20px; }
+    .alert-text { flex: 1; font-size: 14px; }
+    .alert-time { font-size: 11px; color: var(--text-dim); }
+    
+    /* Contacts Grid */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    
+    .contact-card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      color: var(--text);
+      border-radius: 12px;
+      padding: 16px;
     }
+    
+    .contact-role {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    
+    .contact-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    
+    .contact-info {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    
+    .contact-info a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+    
+    /* Audio Controls */
+    .audio-player {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .audio-now-playing {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+    
+    .audio-track {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .audio-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    
+    .audio-btn.play {
+      width: 64px;
+      height: 64px;
+      background: white;
+      color: var(--purple);
+    }
+    
+    .volume-slider {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.2);
+      appearance: none;
+    }
+    
+    .volume-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+    }
+    
+    /* Progress Bars */
+    .progress-bar {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    
+    .progress-fill.green { background: var(--green); }
+    .progress-fill.orange { background: var(--orange); }
+    .progress-fill.red { background: var(--red); }
+    .progress-fill.purple { background: var(--purple); }
     
     /* Two Column Layout */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 20px;
     }
     
     @media (max-width: 900px) {
       .two-col { grid-template-columns: 1fr; }
+    }
+    
+    /* Schedule Grid */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    
+    .schedule-day {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    
+    .schedule-day.today {
+      border-color: var(--teal);
+      background: rgba(6, 214, 160, 0.1);
+    }
+    
+    .schedule-date {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    
+    .schedule-daynum {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 4px 0;
+    }
+    
+    .schedule-info {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    
+    /* Car Counter */
+    .car-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 24px;
+      background: var(--surface);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .car-count {
+      text-align: center;
+    }
+    
+    .car-count-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    
+    .car-count-label {
+      font-size: 13px;
+      color: var(--text-dim);
     }
     
     .hidden { display: none !important; }
@@ -425,7 +466,7 @@
   <div class="header">
     <div class="header-left">
       <img src="logo.jpg" alt="" class="header-logo">
-      <select class="venue-select">
+      <select class="venue-select" id="venueSelect">
         <option>📍 Katy</option>
         <option>📍 Spring</option>
         <option>📍 Frisco</option>
@@ -436,7 +477,7 @@
         <option>📍 OKC</option>
       </select>
     </div>
-    <div class="header-right">
+    <div>
       <span class="live-badge">● LIVE</span>
     </div>
   </div>
@@ -444,352 +485,117 @@
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
-    <button class="tab" onclick="showTab('sales')">💰 Sales & Rewards</button>
-    <button class="tab" onclick="showTab('tents')">🎪 Tents</button>
+    <button class="tab" onclick="showTab('staffing')">👥 Staffing</button>
     <button class="tab" onclick="showTab('inventory')">📦 Inventory</button>
-    <button class="tab" onclick="showTab('staff')">👥 Staff</button>
-    <button class="tab" onclick="showTab('alerts')">🔔 Alerts</button>
+    <button class="tab" onclick="showTab('schedule')">📅 Schedule</button>
+    <button class="tab" onclick="showTab('traffic')">🚗 Traffic</button>
+    <button class="tab" onclick="showTab('audio')">🔊 Audio</button>
+    <button class="tab" onclick="showTab('contacts')">📞 Contacts</button>
+    <button class="tab" onclick="showTab('events')">🎄 Events</button>
   </div>
   
   <!-- Dashboard Tab -->
   <div class="content" id="tab-dashboard">
     <div class="stats-row">
       <div class="stat-card">
-        <div class="stat-label">Tonight's Sales</div>
-        <div class="stat-value" style="color: var(--teal);">$4,832</div>
-        <div class="stat-change up">↑ 18% vs last Friday</div>
+        <div class="stat-label">Cars Tonight</div>
+        <div class="stat-value" style="color: var(--teal);">847</div>
+        <div class="stat-change up">↑ 12% vs last Fri</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Blitzen Bundles Sold</div>
-        <div class="stat-value" style="color: var(--purple);">127</div>
-        <div class="stat-change up">↑ 23 more than goal</div>
+        <div class="stat-label">Labor Cost</div>
+        <div class="stat-value">$2,340</div>
+        <div class="stat-change warn">⚠️ 92% of budget</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Staff Clocked In</div>
+        <div class="stat-label">Staff On-Site</div>
         <div class="stat-value">24</div>
         <div class="stat-change">of 26 scheduled</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Active Alerts</div>
+        <div class="stat-label">Tent Sales</div>
+        <div class="stat-value" style="color: var(--green);">$4,832</div>
+        <div class="stat-change up">↑ 18% vs last Fri</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Show Opens</div>
+        <div class="stat-value">5:30p</div>
+        <div class="stat-change">in 2h 15m</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Alerts</div>
         <div class="stat-value" style="color: var(--orange);">3</div>
-        <div class="stat-change">2 inventory, 1 staffing</div>
+        <div class="stat-change">2 inventory, 1 staff</div>
       </div>
     </div>
     
     <div class="two-col">
       <div>
-        <div class="section-title">🏆 Tonight's Top Sellers</div>
-        <div class="leaderboard">
-          <div class="leaderboard-header">🔥 Sales Leaderboard — Live</div>
-          <div class="leaderboard-row">
-            <div class="rank gold">1</div>
-            <div class="employee-name">Maria G. <span class="employee-tent">Photo Tent</span></div>
-            <div class="sales-count">$892 <span class="sales-label">sales</span></div>
-          </div>
-          <div class="leaderboard-row">
-            <div class="rank silver">2</div>
-            <div class="employee-name">Jake T. <span class="employee-tent">Hot Cocoa</span></div>
-            <div class="sales-count">$734 <span class="sales-label">sales</span></div>
-          </div>
-          <div class="leaderboard-row">
-            <div class="rank bronze">3</div>
-            <div class="employee-name">Ashley R. <span class="employee-tent">Merch Tent</span></div>
-            <div class="sales-count">$621 <span class="sales-label">sales</span></div>
-          </div>
-          <div class="leaderboard-row">
-            <div class="rank other">4</div>
-            <div class="employee-name">Derek M. <span class="employee-tent">S'mores</span></div>
-            <div class="sales-count">$445 <span class="sales-label">sales</span></div>
-          </div>
-          <div class="leaderboard-row">
-            <div class="rank other">5</div>
-            <div class="employee-name">Kim L. <span class="employee-tent">Photo Tent</span></div>
-            <div class="sales-count">$398 <span class="sales-label">sales</span></div>
-          </div>
+        <div class="section-title">⚠️ Active Alerts</div>
+        <div class="alert-item urgent">
+          <div class="alert-icon">🚨</div>
+          <div class="alert-text"><strong>Hot Cocoa Cups</strong> — Only 45 left, need restock</div>
+          <div class="alert-time">5m ago</div>
+        </div>
+        <div class="alert-item warning">
+          <div class="alert-icon">👤</div>
+          <div class="alert-text"><strong>No Show</strong> — Tyler B. not clocked in (5pm shift)</div>
+          <div class="alert-time">32m ago</div>
+        </div>
+        <div class="alert-item warning">
+          <div class="alert-icon">💰</div>
+          <div class="alert-text"><strong>Labor Budget</strong> — Approaching 92% threshold</div>
+          <div class="alert-time">1h ago</div>
+        </div>
+        <div class="alert-item info">
+          <div class="alert-icon">🎉</div>
+          <div class="alert-text"><strong>Bonus Unlocked</strong> — Maria hit 15 Blitzen Bundles!</div>
+          <div class="alert-time">23m ago</div>
         </div>
       </div>
       
       <div>
-        <div class="section-title">🎁 Product Goals — Tonight</div>
-        <div class="product-grid">
-          <div class="product-card">
-            <div class="product-icon">🎁</div>
-            <div class="product-name">Blitzen Bundle</div>
-            <div class="product-sold">127</div>
-            <div class="product-goal">Goal: 100</div>
-            <div class="product-progress">
-              <div class="product-progress-bar" style="width: 100%;"></div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-icon">🍿</div>
-            <div class="product-name">Popcorn</div>
-            <div class="product-sold">89</div>
-            <div class="product-goal">Goal: 120</div>
-            <div class="product-progress">
-              <div class="product-progress-bar" style="width: 74%;"></div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-icon">☕</div>
-            <div class="product-name">Hot Cocoa</div>
-            <div class="product-sold">203</div>
-            <div class="product-goal">Goal: 150</div>
-            <div class="product-progress">
-              <div class="product-progress-bar" style="width: 100%;"></div>
-            </div>
-          </div>
-          <div class="product-card">
-            <div class="product-icon">🔥</div>
-            <div class="product-name">S'mores Kit</div>
-            <div class="product-sold">67</div>
-            <div class="product-goal">Goal: 80</div>
-            <div class="product-progress">
-              <div class="product-progress-bar" style="width: 84%;"></div>
-            </div>
-          </div>
+        <div class="section-title">🕐 Today's Schedule</div>
+        <div class="card">
+          <table class="table">
+            <tr>
+              <td>3:00 PM</td>
+              <td>Staff Arrival / Setup</td>
+              <td><span class="badge badge-green">Done</span></td>
+            </tr>
+            <tr>
+              <td>4:30 PM</td>
+              <td>Pre-Show Meeting</td>
+              <td><span class="badge badge-green">Done</span></td>
+            </tr>
+            <tr>
+              <td>5:00 PM</td>
+              <td>Tents Open</td>
+              <td><span class="badge badge-purple">Now</span></td>
+            </tr>
+            <tr>
+              <td>5:30 PM</td>
+              <td>Gates Open</td>
+              <td><span class="badge badge-orange">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>10:00 PM</td>
+              <td>Last Car Entry</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>11:00 PM</td>
+              <td>Tents Close / Closeout</td>
+              <td></td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Sales & Rewards Tab -->
-  <div class="content hidden" id="tab-sales">
-    <div class="section-title">💰 Sales & Rewards Program</div>
-    
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Tonight's Bonus Pool</div>
-        <div class="stat-value" style="color: var(--green);">$250</div>
-        <div class="stat-change">Top 3 split it</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Rewards Paid This Season</div>
-        <div class="stat-value" style="color: var(--purple);">$3,420</div>
-        <div class="stat-change up">23 employees earned</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Avg Upsell Rate</div>
-        <div class="stat-value">34%</div>
-        <div class="stat-change up">↑ 8% from last week</div>
-      </div>
-    </div>
-    
-    <div class="section-title">🎯 Active Reward Challenges</div>
-    <div class="alerts-list" style="margin-bottom: 24px;">
-      <div class="alert-item" style="border-color: var(--teal);">
-        <div class="alert-icon">🏆</div>
-        <div class="alert-text">
-          <strong>Blitzen Bundle Bonus</strong><br>
-          <span style="color: var(--text-dim);">Sell 15 bundles tonight = +$25 cash</span>
-        </div>
-        <div style="color: var(--teal); font-weight: 700;">12 participating</div>
-      </div>
-      <div class="alert-item" style="border-color: var(--purple);">
-        <div class="alert-icon">⚡</div>
-        <div class="alert-text">
-          <strong>Streak Bonus</strong><br>
-          <span style="color: var(--text-dim);">3 upsells in a row = +$5 instant</span>
-        </div>
-        <div style="color: var(--purple); font-weight: 700;">Active now</div>
-      </div>
-      <div class="alert-item" style="border-color: var(--pink);">
-        <div class="alert-icon">👑</div>
-        <div class="alert-text">
-          <strong>Weekly Champion</strong><br>
-          <span style="color: var(--text-dim);">Top seller this week wins $100 + prime parking</span>
-        </div>
-        <div style="color: var(--pink); font-weight: 700;">3 days left</div>
-      </div>
-    </div>
-    
-    <div class="section-title">📊 Full Leaderboard</div>
-    <div class="leaderboard">
-      <div class="leaderboard-header">Season Rankings — All Venues</div>
-      <div class="leaderboard-row">
-        <div class="rank gold">1</div>
-        <div class="employee-name">Maria G. <span class="employee-tent">Katy - Photo</span></div>
-        <div class="sales-count">$12,340 <span class="sales-label">season</span></div>
-      </div>
-      <div class="leaderboard-row">
-        <div class="rank silver">2</div>
-        <div class="employee-name">Carlos R. <span class="employee-tent">Frisco - Merch</span></div>
-        <div class="sales-count">$11,892 <span class="sales-label">season</span></div>
-      </div>
-      <div class="leaderboard-row">
-        <div class="rank bronze">3</div>
-        <div class="employee-name">Jake T. <span class="employee-tent">Katy - Cocoa</span></div>
-        <div class="sales-count">$10,445 <span class="sales-label">season</span></div>
-      </div>
-      <div class="leaderboard-row">
-        <div class="rank other">4</div>
-        <div class="employee-name">Ashley R. <span class="employee-tent">Spring - Merch</span></div>
-        <div class="sales-count">$9,234 <span class="sales-label">season</span></div>
-      </div>
-      <div class="leaderboard-row">
-        <div class="rank other">5</div>
-        <div class="employee-name">Derek M. <span class="employee-tent">Katy - S'mores</span></div>
-        <div class="sales-count">$8,901 <span class="sales-label">season</span></div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Tents Tab -->
-  <div class="content hidden" id="tab-tents">
-    <div class="section-title">🎪 Tent Status</div>
-    <div class="tents-grid">
-      <div class="tent-card">
-        <div class="tent-header">
-          <div class="tent-name">📸 Photo Experience</div>
-          <div class="tent-status open">Open</div>
-        </div>
-        <div class="tent-body">
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Tonight's Sales</span>
-            <span class="tent-stat-value" style="color: var(--teal);">$1,234</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Photos Taken</span>
-            <span class="tent-stat-value">89</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Avg Wait Time</span>
-            <span class="tent-stat-value">4 min</span>
-          </div>
-          <div class="tent-crew">
-            <span class="crew-badge">👤 Maria G.</span>
-            <span class="crew-badge">👤 Kim L.</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="tent-card">
-        <div class="tent-header">
-          <div class="tent-name">☕ Hot Cocoa Stand</div>
-          <div class="tent-status busy">Busy</div>
-        </div>
-        <div class="tent-body">
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Tonight's Sales</span>
-            <span class="tent-stat-value" style="color: var(--teal);">$892</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Cups Sold</span>
-            <span class="tent-stat-value">203</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Stock Level</span>
-            <span class="tent-stat-value" style="color: var(--orange);">Low</span>
-          </div>
-          <div class="tent-crew">
-            <span class="crew-badge">👤 Jake T.</span>
-            <span class="crew-badge">👤 Sarah M.</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="tent-card">
-        <div class="tent-header">
-          <div class="tent-name">🛍️ Merch Tent</div>
-          <div class="tent-status open">Open</div>
-        </div>
-        <div class="tent-body">
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Tonight's Sales</span>
-            <span class="tent-stat-value" style="color: var(--teal);">$1,567</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Blitzen Bundles</span>
-            <span class="tent-stat-value">67</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Stock Level</span>
-            <span class="tent-stat-value" style="color: var(--green);">Good</span>
-          </div>
-          <div class="tent-crew">
-            <span class="crew-badge">👤 Ashley R.</span>
-            <span class="crew-badge">👤 Mike D.</span>
-            <span class="crew-badge">👤 Lisa P.</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="tent-card">
-        <div class="tent-header">
-          <div class="tent-name">🔥 S'mores Station</div>
-          <div class="tent-status open">Open</div>
-        </div>
-        <div class="tent-body">
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Tonight's Sales</span>
-            <span class="tent-stat-value" style="color: var(--teal);">$534</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Kits Sold</span>
-            <span class="tent-stat-value">67</span>
-          </div>
-          <div class="tent-stat-row">
-            <span class="tent-stat-label">Fire Pits Active</span>
-            <span class="tent-stat-value">4 of 6</span>
-          </div>
-          <div class="tent-crew">
-            <span class="crew-badge">👤 Derek M.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Inventory Tab -->
-  <div class="content hidden" id="tab-inventory">
-    <div class="section-title">📦 Inventory Status</div>
-    <div class="alerts-list">
-      <div class="alert-item urgent">
-        <div class="alert-icon">🚨</div>
-        <div class="alert-text">
-          <strong>Hot Cocoa Cups — CRITICAL</strong><br>
-          <span style="color: var(--text-dim);">Only 45 cups remaining. Restock NOW.</span>
-        </div>
-        <button class="btn btn-primary">Send Runner</button>
-      </div>
-      <div class="alert-item warning">
-        <div class="alert-icon">⚠️</div>
-        <div class="alert-text">
-          <strong>S'mores Kits — Low</strong><br>
-          <span style="color: var(--text-dim);">~30 min supply at current pace.</span>
-        </div>
-        <button class="btn btn-outline">Request Restock</button>
-      </div>
-      <div class="alert-item">
-        <div class="alert-icon">📦</div>
-        <div class="alert-text">
-          <strong>Blitzen Bundles — Good</strong><br>
-          <span style="color: var(--text-dim);">187 remaining. 2+ hours supply.</span>
-        </div>
-        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
-      </div>
-      <div class="alert-item">
-        <div class="alert-icon">📦</div>
-        <div class="alert-text">
-          <strong>Popcorn Bags — Good</strong><br>
-          <span style="color: var(--text-dim);">340 remaining.</span>
-        </div>
-        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
-      </div>
-      <div class="alert-item">
-        <div class="alert-icon">📦</div>
-        <div class="alert-text">
-          <strong>Glow Sticks — Good</strong><br>
-          <span style="color: var(--text-dim);">520 remaining.</span>
-        </div>
-        <span style="color: var(--green); font-weight: 600;">✓ OK</span>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Staff Tab -->
-  <div class="content hidden" id="tab-staff">
-    <div class="section-title">👥 Staff — Tonight</div>
+  <!-- Staffing Tab -->
+  <div class="content hidden" id="tab-staffing">
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Clocked In</div>
@@ -804,80 +610,497 @@
         <div class="stat-value" style="color: var(--red);">2</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Labor Hours</div>
-        <div class="stat-value">142</div>
+        <div class="stat-label">Today's Labor</div>
+        <div class="stat-value">$2,340</div>
+        <div class="stat-change warn">Budget: $2,550</div>
       </div>
     </div>
     
-    <div class="leaderboard">
-      <div class="leaderboard-header">Staff Status</div>
-      <div class="leaderboard-row">
-        <div class="rank" style="background: var(--green);">✓</div>
-        <div class="employee-name">Maria G. <span class="employee-tent">Clocked in 5:02pm</span></div>
-        <div style="font-size: 13px; color: var(--text-dim);">Photo Tent</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">💰 Labor Budget</div>
+        <button class="btn btn-outline">Set Threshold</button>
       </div>
-      <div class="leaderboard-row">
-        <div class="rank" style="background: var(--green);">✓</div>
-        <div class="employee-name">Jake T. <span class="employee-tent">Clocked in 4:58pm</span></div>
-        <div style="font-size: 13px; color: var(--text-dim);">Hot Cocoa</div>
+      <div style="margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <span>$2,340 spent</span>
+          <span>$2,550 budget</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" style="width: 92%;"></div>
+        </div>
+        <div style="font-size: 12px; color: var(--orange); margin-top: 8px;">⚠️ 92% of daily labor budget used</div>
       </div>
-      <div class="leaderboard-row">
-        <div class="rank" style="background: var(--orange);">☕</div>
-        <div class="employee-name">Derek M. <span class="employee-tent">On break since 7:15pm</span></div>
-        <div style="font-size: 13px; color: var(--text-dim);">S'mores</div>
+    </div>
+    
+    <div class="section-title">👥 Staff Status</div>
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role / Tent</th>
+            <th>Status</th>
+            <th>Clock In</th>
+            <th>Hours</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Maria G.</strong></td>
+            <td>Photo Tent</td>
+            <td><span class="badge badge-green">Working</span></td>
+            <td>4:58 PM</td>
+            <td>2.5 hrs</td>
+            <td><button class="btn btn-outline">Break</button></td>
+          </tr>
+          <tr>
+            <td><strong>Jake T.</strong></td>
+            <td>Hot Cocoa</td>
+            <td><span class="badge badge-green">Working</span></td>
+            <td>5:02 PM</td>
+            <td>2.4 hrs</td>
+            <td><button class="btn btn-outline">Break</button></td>
+          </tr>
+          <tr>
+            <td><strong>Derek M.</strong></td>
+            <td>S'mores</td>
+            <td><span class="badge badge-orange">On Break</span></td>
+            <td>4:45 PM</td>
+            <td>2.7 hrs</td>
+            <td><button class="btn btn-outline">Return</button></td>
+          </tr>
+          <tr>
+            <td><strong>Tyler B.</strong></td>
+            <td>Merch Tent</td>
+            <td><span class="badge badge-red">No Show</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td><button class="btn btn-danger">Contact</button></td>
+          </tr>
+          <tr>
+            <td><strong>Ashley R.</strong></td>
+            <td>Merch Tent</td>
+            <td><span class="badge badge-green">Working</span></td>
+            <td>4:55 PM</td>
+            <td>2.5 hrs</td>
+            <td><button class="btn btn-outline">Break</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="margin-top: 16px;">
+      <button class="btn btn-primary">+ Add Staff</button>
+      <button class="btn btn-outline">🔄 Sync with Paycor</button>
+      <button class="btn btn-outline">📊 Export Hours</button>
+    </div>
+  </div>
+  
+  <!-- Inventory Tab -->
+  <div class="content hidden" id="tab-inventory">
+    <div class="section-title">📦 Inventory Status</div>
+    
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Est. Time Left</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🧋 Hot Cocoa Cups</strong></td>
+            <td>45</td>
+            <td><span class="badge badge-red">Critical</span></td>
+            <td>~30 min</td>
+            <td><button class="btn btn-danger">🚨 Restock Now</button></td>
+          </tr>
+          <tr>
+            <td><strong>🔥 S'mores Kits</strong></td>
+            <td>67</td>
+            <td><span class="badge badge-orange">Low</span></td>
+            <td>~1.5 hrs</td>
+            <td><button class="btn btn-outline">Request</button></td>
+          </tr>
+          <tr>
+            <td><strong>🎁 Blitzen Bundles</strong></td>
+            <td>187</td>
+            <td><span class="badge badge-green">Good</span></td>
+            <td>3+ hrs</td>
+            <td><button class="btn btn-outline">Request</button></td>
+          </tr>
+          <tr>
+            <td><strong>🍿 Popcorn Bags</strong></td>
+            <td>340</td>
+            <td><span class="badge badge-green">Good</span></td>
+            <td>4+ hrs</td>
+            <td><button class="btn btn-outline">Request</button></td>
+          </tr>
+          <tr>
+            <td><strong>✨ Glow Sticks</strong></td>
+            <td>520</td>
+            <td><span class="badge badge-green">Good</span></td>
+            <td>5+ hrs</td>
+            <td><button class="btn btn-outline">Request</button></td>
+          </tr>
+          <tr>
+            <td><strong>📸 Photo Prints</strong></td>
+            <td>200</td>
+            <td><span class="badge badge-green">Good</span></td>
+            <td>4+ hrs</td>
+            <td><button class="btn btn-outline">Request</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="section-title" style="margin-top: 24px;">📋 Restock Requests</div>
+    <div class="alert-item info">
+      <div class="alert-icon">📦</div>
+      <div class="alert-text"><strong>Hot Cocoa Cups</strong> — Runner dispatched</div>
+      <div><span class="badge badge-purple">In Progress</span></div>
+    </div>
+    <div class="alert-item info">
+      <div class="alert-icon">✅</div>
+      <div class="alert-text"><strong>Popcorn</strong> — Restocked (200 bags)</div>
+      <div class="alert-time">45m ago</div>
+    </div>
+  </div>
+  
+  <!-- Schedule Tab -->
+  <div class="content hidden" id="tab-schedule">
+    <div class="section-title">📅 This Week</div>
+    <div class="schedule-grid">
+      <div class="schedule-day">
+        <div class="schedule-date">Mon</div>
+        <div class="schedule-daynum">3</div>
+        <div class="schedule-info">Closed</div>
       </div>
-      <div class="leaderboard-row">
-        <div class="rank" style="background: var(--red);">✗</div>
-        <div class="employee-name">Tyler B. <span class="employee-tent">No show — scheduled 5pm</span></div>
-        <div><button class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Contact</button></div>
+      <div class="schedule-day">
+        <div class="schedule-date">Tue</div>
+        <div class="schedule-daynum">4</div>
+        <div class="schedule-info">Closed</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">Wed</div>
+        <div class="schedule-daynum">5</div>
+        <div class="schedule-info">5:30p-10p</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">Thu</div>
+        <div class="schedule-daynum">6</div>
+        <div class="schedule-info">5:30p-10p</div>
+      </div>
+      <div class="schedule-day today">
+        <div class="schedule-date">Fri</div>
+        <div class="schedule-daynum">7</div>
+        <div class="schedule-info">5:30p-11p</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">Sat</div>
+        <div class="schedule-daynum">8</div>
+        <div class="schedule-info">4p-11p</div>
+      </div>
+      <div class="schedule-day">
+        <div class="schedule-date">Sun</div>
+        <div class="schedule-daynum">9</div>
+        <div class="schedule-info">5p-10p</div>
+      </div>
+    </div>
+    
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <div class="section-title">🌅 Opening Checklist</div>
+        <div class="card">
+          <div class="alert-item info">
+            <input type="checkbox" checked> <span style="margin-left: 8px;">Tents set up</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox" checked> <span style="margin-left: 8px;">Inventory stocked</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox" checked> <span style="margin-left: 8px;">Cash drawers counted</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Audio tested</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Staff briefing complete</span>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="section-title">🌙 Closing Checklist</div>
+        <div class="card">
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Cash counted & secured</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Inventory counted</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Equipment secured</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Trash removed</span>
+          </div>
+          <div class="alert-item info">
+            <input type="checkbox"> <span style="margin-left: 8px;">Daily report submitted</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   
-  <!-- Alerts Tab -->
-  <div class="content hidden" id="tab-alerts">
-    <div class="section-title">🔔 Live Alerts</div>
-    <div class="alerts-list">
-      <div class="alert-item urgent">
-        <div class="alert-icon">🚨</div>
-        <div class="alert-text">
-          <strong>Hot Cocoa — Cups Critical</strong><br>
-          <span style="color: var(--text-dim);">Only 45 remaining. Runner dispatched.</span>
-        </div>
-        <div class="alert-time">2 min ago</div>
+  <!-- Traffic Tab -->
+  <div class="content hidden" id="tab-traffic">
+    <div class="car-counter">
+      <div class="car-count">
+        <div class="car-count-value">847</div>
+        <div class="car-count-label">Cars Tonight</div>
       </div>
-      <div class="alert-item warning">
-        <div class="alert-icon">👤</div>
-        <div class="alert-text">
-          <strong>No Show — Tyler B.</strong><br>
-          <span style="color: var(--text-dim);">Scheduled for Merch at 5pm. Not clocked in.</span>
-        </div>
-        <div class="alert-time">1 hr ago</div>
+      <div style="width: 1px; height: 60px; background: var(--border);"></div>
+      <div class="car-count">
+        <div class="car-count-value" style="color: var(--purple);">2,341</div>
+        <div class="car-count-label">Guests (est.)</div>
       </div>
-      <div class="alert-item">
-        <div class="alert-icon">🏆</div>
-        <div class="alert-text">
-          <strong>Bonus Unlocked!</strong><br>
-          <span style="color: var(--text-dim);">Maria G. hit 15 Blitzen Bundle sales — +$25 earned!</span>
-        </div>
-        <div class="alert-time">23 min ago</div>
+      <div style="width: 1px; height: 60px; background: var(--border);"></div>
+      <div class="car-count">
+        <div class="car-count-value" style="color: var(--orange);">12</div>
+        <div class="car-count-label">Cars in Queue</div>
       </div>
-      <div class="alert-item">
-        <div class="alert-icon">📦</div>
-        <div class="alert-text">
-          <strong>Restock Complete</strong><br>
-          <span style="color: var(--text-dim);">Popcorn restocked at Merch Tent (200 bags)</span>
+    </div>
+    
+    <div class="two-col">
+      <div>
+        <div class="section-title">📈 Hourly Flow</div>
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr><th>Hour</th><th>Cars</th><th>vs Avg</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>5:00 PM</td><td>45</td><td style="color: var(--green);">+12%</td></tr>
+              <tr><td>6:00 PM</td><td>127</td><td style="color: var(--green);">+8%</td></tr>
+              <tr><td>7:00 PM</td><td>198</td><td style="color: var(--green);">+15%</td></tr>
+              <tr><td>8:00 PM</td><td>234</td><td style="color: var(--green);">+18%</td></tr>
+              <tr><td>9:00 PM</td><td>176</td><td>—</td></tr>
+              <tr><td>10:00 PM</td><td>67</td><td>—</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="alert-time">45 min ago</div>
       </div>
-      <div class="alert-item">
-        <div class="alert-icon">⚡</div>
-        <div class="alert-text">
-          <strong>Streak Bonus!</strong><br>
-          <span style="color: var(--text-dim);">Jake T. hit 3 upsells in a row — +$5</span>
+      
+      <div>
+        <div class="section-title">🎟️ Add-On Pre-Sales</div>
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr><th>Item</th><th>Pre-Sold</th><th>Redeemed</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Blitzen Bundle</td><td>89</td><td>67</td></tr>
+              <tr><td>Hot Cocoa</td><td>156</td><td>134</td></tr>
+              <tr><td>S'mores Kit</td><td>45</td><td>38</td></tr>
+              <tr><td>Photo Package</td><td>78</td><td>52</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="alert-time">52 min ago</div>
       </div>
+    </div>
+  </div>
+  
+  <!-- Audio Tab -->
+  <div class="content hidden" id="tab-audio">
+    <div class="section-title">🔊 Audio Control</div>
+    
+    <div class="audio-player">
+      <div class="audio-now-playing">Now Playing</div>
+      <div class="audio-track">🎵 Holiday Mix — Tent Ambient</div>
+      <div class="audio-controls">
+        <button class="audio-btn">⏮️</button>
+        <button class="audio-btn play">⏸️</button>
+        <button class="audio-btn">⏭️</button>
+        <div style="flex: 1; display: flex; align-items: center; gap: 12px; margin-left: 16px;">
+          <span>🔈</span>
+          <input type="range" class="volume-slider" value="75">
+          <span>🔊</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="two-col">
+      <div>
+        <div class="section-title">🎶 Playlists</div>
+        <div class="card">
+          <div class="alert-item info" style="cursor: pointer;">
+            <div class="alert-icon">🎄</div>
+            <div class="alert-text"><strong>Holiday Mix</strong><br><span style="color: var(--text-dim); font-size: 12px;">Classic Christmas — 2.5 hrs</span></div>
+            <span class="badge badge-teal">Active</span>
+          </div>
+          <div class="alert-item" style="cursor: pointer;">
+            <div class="alert-icon">❄️</div>
+            <div class="alert-text"><strong>Winter Chill</strong><br><span style="color: var(--text-dim); font-size: 12px;">Ambient instrumental — 3 hrs</span></div>
+          </div>
+          <div class="alert-item" style="cursor: pointer;">
+            <div class="alert-icon">🎅</div>
+            <div class="alert-text"><strong>Santa's Favorites</strong><br><span style="color: var(--text-dim); font-size: 12px;">Upbeat classics — 2 hrs</span></div>
+          </div>
+          <div class="alert-item" style="cursor: pointer;">
+            <div class="alert-icon">✨</div>
+            <div class="alert-text"><strong>Magical Moments</strong><br><span style="color: var(--text-dim); font-size: 12px;">Orchestral — 2.5 hrs</span></div>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="section-title">🎚️ Zone Volumes</div>
+        <div class="card">
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Photo Tent</span>
+              <span>75%</span>
+            </div>
+            <input type="range" class="volume-slider" value="75" style="width: 100%; background: var(--surface2);">
+          </div>
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Hot Cocoa</span>
+              <span>60%</span>
+            </div>
+            <input type="range" class="volume-slider" value="60" style="width: 100%; background: var(--surface2);">
+          </div>
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>Merch Tent</span>
+              <span>70%</span>
+            </div>
+            <input type="range" class="volume-slider" value="70" style="width: 100%; background: var(--surface2);">
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span>S'mores Area</span>
+              <span>50%</span>
+            </div>
+            <input type="range" class="volume-slider" value="50" style="width: 100%; background: var(--surface2);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Contacts Tab -->
+  <div class="content hidden" id="tab-contacts">
+    <div class="section-title">📞 Key Contacts</div>
+    <div class="contacts-grid">
+      <div class="contact-card">
+        <div class="contact-role">Venue Manager</div>
+        <div class="contact-name">Michael Thompson</div>
+        <div class="contact-info">
+          📱 <a href="tel:+15551234567">(555) 123-4567</a><br>
+          ✉️ <a href="mailto:michael@lightpark.com">michael@lightpark.com</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Security Lead</div>
+        <div class="contact-name">James Wilson</div>
+        <div class="contact-info">
+          📱 <a href="tel:+15552345678">(555) 234-5678</a><br>
+          📻 Radio Ch. 3
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Show Tech</div>
+        <div class="contact-name">Sarah Chen</div>
+        <div class="contact-info">
+          📱 <a href="tel:+15553456789">(555) 345-6789</a><br>
+          📻 Radio Ch. 5
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Tent Operations</div>
+        <div class="contact-name">Maria Garcia</div>
+        <div class="contact-info">
+          📱 <a href="tel:+15554567890">(555) 456-7890</a><br>
+          📻 Radio Ch. 2
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">Emergency</div>
+        <div class="contact-name">Local Fire/EMS</div>
+        <div class="contact-info">
+          🚨 <a href="tel:911">911</a><br>
+          Non-emergency: <a href="tel:+15555551234">(555) 555-1234</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-role">HQ / Bob</div>
+        <div class="contact-name">Bob Dodge</div>
+        <div class="contact-info">
+          📱 <a href="tel:+17145958391">(714) 595-8391</a><br>
+          ✉️ <a href="mailto:bobdodgecreative@gmail.com">bobdodgecreative@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Events Tab -->
+  <div class="content hidden" id="tab-events">
+    <div class="section-title">🎄 Event Calendar</div>
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Details</th>
+            <th>Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Feb 7</strong></td>
+            <td>🎅 Santa Meet & Greet</td>
+            <td>Photo Tent, 5:30-9pm</td>
+            <td><span class="badge badge-orange">High Traffic</span></td>
+          </tr>
+          <tr>
+            <td><strong>Feb 8</strong></td>
+            <td>🐕 Pet Night</td>
+            <td>Pets allowed, special photo ops</td>
+            <td><span class="badge badge-orange">High Traffic</span></td>
+          </tr>
+          <tr>
+            <td><strong>Feb 14</strong></td>
+            <td>💕 Valentine's Special</td>
+            <td>Couples packages, rose giveaway</td>
+            <td><span class="badge badge-red">Very High</span></td>
+          </tr>
+          <tr>
+            <td><strong>Feb 15</strong></td>
+            <td>🎶 Live Music Night</td>
+            <td>Local band at S'mores area</td>
+            <td><span class="badge badge-orange">High Traffic</span></td>
+          </tr>
+          <tr>
+            <td><strong>Feb 22</strong></td>
+            <td>🎁 Season Finale</td>
+            <td>Last night, fireworks at 10pm</td>
+            <td><span class="badge badge-red">Max Capacity</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="margin-top: 16px;">
+      <button class="btn btn-primary">+ Add Event</button>
     </div>
   </div>
   
