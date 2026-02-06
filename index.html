@@ -568,6 +568,7 @@
         <span>🌙</span>
         <span>52°F</span>
       </div>
+      <button onclick="backupAllData()" style="background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:6px;padding:6px 10px;color:#22c55e;cursor:pointer;font-size:11px;" title="Backup">💾</button>
       <div class="user-avatar">MG</div>
     </div>
   </header>
@@ -1116,6 +1117,24 @@
     setTimeout(() => {
       document.getElementById('splash').classList.add('hidden');
     }, 1500);
+    
+    // === BACKUP FUNCTION (APP STANDARD) ===
+    function backupAllData() {
+      try {
+        const backup = {
+          version: '2026.02.06',
+          app: 'tent-manager',
+          exportedAt: new Date().toISOString(),
+          localStorage: JSON.stringify(localStorage)
+        };
+        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `tent-manager-backup-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        alert('✅ Backup downloaded!');
+      } catch(e) { alert('Backup error: ' + e.message); }
+    }
     
     // Navigation
     function showPage(pageId) {
