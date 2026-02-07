@@ -3,7 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Tent Manager | The Light Park</title>
+  
+  <!-- TLP Cloud Sync -->
+  <script>
+    const TLP_SUPABASE_URL = 'https://gwjtfcrgpxclixonogpe.supabase.co';
+    const TLP_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3anRmY3JncHhjbGl4b25vZ3BlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMzQzOTUsImV4cCI6MjA4NTkxMDM5NX0.qM1-_VA1Dsx_nsWkeoAJvNWNgSuuwApPBGoJU32X3-I';
+    const APP_NAME = 'tent_manager';
+    
+    window.CloudSync = {
+      online: navigator.onLine,
+      async save(key, data) {
+        localStorage.setItem(`${APP_NAME}_${key}`, JSON.stringify(data));
+        if (!this.online) return { synced: false };
+        try {
+          const existing = await fetch(`${TLP_SUPABASE_URL}/rest/v1/app_data?app_data=eq.${APP_NAME}&data_key=eq.${key}&select=id`,
+            { headers: { 'apikey': TLP_SUPABASE_KEY, 'Authorization': `Bearer ${TLP_SUPABASE_KEY}` }}).then(r => r.json());
+          const method = existing.length > 0 ? 'PATCH' : 'POST';
+          const url = existing.length > 0 ? `${TLP_SUPABASE_URL}/rest/v1/app_data?id=eq.${existing[0].id}` : `${TLP_SUPABASE_URL}/rest/v1/app_data`;
+          const body = existing.length > 0 ? { data, updated_at: new Date().toISOString() } : { app_data: APP_NAME, data_key: key, data };
+          await fetch(url, { method, headers: { 'apikey': TLP_SUPABASE_KEY, 'Authorization': `Bearer ${TLP_SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }, body: JSON.stringify(body) });
+          return { synced: true };
+        } catch (e) { return { synced: false }; }
+      },
+      async load(key) {
+        if (this.online) {
+          try {
+            const result = await fetch(`${TLP_SUPABASE_URL}/rest/v1/app_data?app_data=eq.${APP_NAME}&data_key=eq.${key}&select=data`,
+              { headers: { 'apikey': TLP_SUPABASE_KEY, 'Authorization': `Bearer ${TLP_SUPABASE_KEY}` }}).then(r => r.json());
+            if (result.length > 0) { localStorage.setItem(`${APP_NAME}_${key}`, JSON.stringify(result[0].data)); return result[0].data; }
+          } catch (e) {}
+        }
+        const local = localStorage.getItem(`${APP_NAME}_${key}`);
+        return local ? JSON.parse(local) : null;
+      }
+    };
+    window.addEventListener('online', () => CloudSync.online = true);
+    window.addEventListener('offline', () => CloudSync.online = false);
+  </script>
+  
   <style>
     :root {
       --bg: #0a0a0f;
