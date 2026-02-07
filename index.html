@@ -427,6 +427,28 @@
     
     @media (max-width: 900px) {
       .two-col { grid-template-columns: 1fr; }
+      .schedule-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    
+    @media (max-width: 600px) {
+      .header h1 { font-size: 16px; }
+      .tab-bar { gap: 4px; padding: 8px 12px; }
+      .tab { padding: 8px 12px; font-size: 12px; }
+      .content { padding: 12px; }
+      .card { padding: 16px; }
+      .big-stat { padding: 16px; }
+      .big-stat-value { font-size: 32px; }
+      .schedule-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .schedule-day { padding: 8px; }
+      .schedule-daynum { font-size: 18px; }
+      .staff-grid { grid-template-columns: repeat(2, 1fr); }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .action-btn { font-size: 13px; padding: 12px 16px; }
+    }
+    
+    @media (max-width: 400px) {
+      .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .staff-grid, .menu-grid { grid-template-columns: 1fr; }
     }
     
     /* Schedule Grid */
