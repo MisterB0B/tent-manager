@@ -1166,6 +1166,57 @@
       document.getElementById('tab-' + tabId).classList.remove('hidden');
       event.target.classList.add('active');
     }
+    
+    // Tent stats tracking
+    let tentStats = {
+      sales: 0,
+      transactions: 0,
+      topItem: 'Hot Cocoa'
+    };
+    
+    // Sync tent stats to cloud for Command Center
+    async function syncTentStats() {
+      try {
+        await CloudSync.save('tent_stats', {
+          ...tentStats,
+          updatedAt: new Date().toISOString()
+        });
+      } catch (e) {
+        console.log('Tent stats sync pending');
+      }
+    }
+    
+    // Load shared menu from Command Center
+    async function loadSharedMenu() {
+      try {
+        const menu = await CloudSync.load('shared_menu');
+        if (menu) {
+          console.log('Loaded shared menu:', menu.length, 'items');
+          // Could update inventory display based on menu availability
+        }
+      } catch (e) {
+        console.log('Using default menu');
+      }
+    }
+    
+    // Load shared live stats from Ticket Scanner
+    async function loadLiveStats() {
+      try {
+        const stats = await CloudSync.load('live_stats');
+        if (stats) {
+          // Update dashboard with live car count etc
+          console.log('Live stats:', stats);
+        }
+      } catch (e) {}
+    }
+    
+    // Initialize data sync
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadSharedMenu();
+      await loadLiveStats();
+      // Refresh every 30 seconds
+      setInterval(loadLiveStats, 30000);
+    });
   </script>
 </body>
 </html>
