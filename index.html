@@ -261,6 +261,8 @@
     .badge-green { background: rgba(34, 197, 94, 0.2); color: var(--green); }
     .badge-red { background: rgba(239, 68, 68, 0.2); color: var(--red); }
     .badge-orange { background: rgba(249, 115, 22, 0.2); color: var(--orange); }
+    .badge-blue { background: rgba(59, 130, 246, 0.2); color: var(--blue); }
+    .badge-gray { background: rgba(148, 163, 184, 0.2); color: var(--text-dim); }
     .badge-purple { background: rgba(168, 85, 247, 0.2); color: var(--purple); }
     .badge-teal { background: rgba(6, 214, 160, 0.2); color: var(--teal); }
     
@@ -553,6 +555,7 @@
     <button class="tab" onclick="showTab('audio')">🔊 Audio</button>
     <button class="tab" onclick="showTab('contacts')">📞 Contacts</button>
     <button class="tab" onclick="showTab('events')">🎄 Events</button>
+    <button class="tab" onclick="showTab('mascots')">🎭 Mascots</button>
   </div>
   
   <!-- Dashboard Tab -->
@@ -1165,6 +1168,144 @@
     </div>
   </div>
   
+  <!-- Mascots Tab -->
+  <div class="content hidden" id="tab-mascots">
+    <div class="section-title">🎭 Mascot Schedule</div>
+    
+    <div class="card" style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0; font-size: 16px;">Tonight's Mascot Rotation</h3>
+        <select id="mascotVenue" style="padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+          <option>All Venues</option>
+          <option>Katy</option>
+          <option>Spring</option>
+          <option>Selma</option>
+          <option>Missions</option>
+          <option>Arlington</option>
+          <option>Frisco</option>
+          <option>Round Rock</option>
+          <option>OKC</option>
+        </select>
+      </div>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Time Slot</th>
+            <th>Character</th>
+            <th>Location</th>
+            <th>Performer</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="mascotScheduleBody">
+          <tr>
+            <td><strong>5:30 - 6:15</strong></td>
+            <td>🎅 Santa</td>
+            <td>Photo Tent</td>
+            <td>Mike R.</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>5:30 - 6:15</strong></td>
+            <td>⛄ Frosty</td>
+            <td>Entrance Gate</td>
+            <td>Sarah T.</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>5:30 - 6:15</strong></td>
+            <td>🦌 Rudolph</td>
+            <td>Candy Lane</td>
+            <td>Jake M.</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><strong>6:15 - 6:30</strong></td>
+            <td colspan="4" style="text-align: center; color: var(--text-dim);">— Break / Rotation —</td>
+          </tr>
+          <tr>
+            <td><strong>6:30 - 7:15</strong></td>
+            <td>🎅 Santa</td>
+            <td>Photo Tent</td>
+            <td>Mike R.</td>
+            <td><span class="badge badge-blue">Upcoming</span></td>
+          </tr>
+          <tr>
+            <td><strong>6:30 - 7:15</strong></td>
+            <td>⛄ Frosty</td>
+            <td>S'mores Area</td>
+            <td>Sarah T.</td>
+            <td><span class="badge badge-blue">Upcoming</span></td>
+          </tr>
+          <tr>
+            <td><strong>6:30 - 7:15</strong></td>
+            <td>🦌 Rudolph</td>
+            <td>Gift Shop</td>
+            <td>Jake M.</td>
+            <td><span class="badge badge-blue">Upcoming</span></td>
+          </tr>
+          <tr>
+            <td><strong>7:15 - 7:30</strong></td>
+            <td colspan="4" style="text-align: center; color: var(--text-dim);">— Break / Rotation —</td>
+          </tr>
+          <tr>
+            <td><strong>7:30 - 8:15</strong></td>
+            <td>🎅 Santa</td>
+            <td>Photo Tent</td>
+            <td>Chris L.</td>
+            <td><span class="badge badge-gray">Scheduled</span></td>
+          </tr>
+          <tr>
+            <td><strong>7:30 - 8:15</strong></td>
+            <td>⛄ Frosty</td>
+            <td>Entrance Gate</td>
+            <td>Emma W.</td>
+            <td><span class="badge badge-gray">Scheduled</span></td>
+          </tr>
+          <tr>
+            <td><strong>7:30 - 8:15</strong></td>
+            <td>🦌 Rudolph</td>
+            <td>Food Court</td>
+            <td>Josh P.</td>
+            <td><span class="badge badge-gray">Scheduled</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div class="card">
+        <div class="section-title" style="margin-bottom: 12px;">🎭 Characters Available</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <span style="padding: 8px 16px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 20px;">🎅 Santa</span>
+          <span style="padding: 8px 16px; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); border-radius: 20px;">⛄ Frosty</span>
+          <span style="padding: 8px 16px; background: rgba(168,85,247,0.2); border: 1px solid rgba(168,85,247,0.4); border-radius: 20px;">🦌 Rudolph</span>
+          <span style="padding: 8px 16px; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 20px;">🧝 Elf</span>
+          <span style="padding: 8px 16px; background: rgba(236,72,153,0.2); border: 1px solid rgba(236,72,153,0.4); border-radius: 20px;">🤶 Mrs. Claus</span>
+          <span style="padding: 8px 16px; background: rgba(6,182,212,0.2); border: 1px solid rgba(6,182,212,0.4); border-radius: 20px;">🐻‍❄️ Polar Bear</span>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="section-title" style="margin-bottom: 12px;">📍 Photo Op Locations</div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">📸 Photo Tent — Primary Santa spot</li>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">🚪 Entrance Gate — Guest greeting</li>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">🍬 Candy Lane — Kids favorite</li>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">🔥 S'mores Area — Evening rotation</li>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">🎁 Gift Shop — Upsell opportunity</li>
+          <li style="padding: 8px 0;">🍔 Food Court — Roaming</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div style="margin-top: 20px; display: flex; gap: 12px;">
+      <button class="btn btn-primary" onclick="addMascotShift()">+ Add Shift</button>
+      <button class="btn btn-secondary" onclick="printMascotSchedule()">🖨️ Print Schedule</button>
+    </div>
+  </div>
+  
   <!-- Compliance Footer -->
   <footer style="background: var(--surface); border-top: 1px solid var(--border); padding: 20px; text-align: center; margin-top: 40px;">
     <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--text-dim);">
@@ -1239,6 +1380,91 @@
       // Refresh every 30 seconds
       setInterval(loadLiveStats, 30000);
     });
+    
+    // Mascot Schedule Functions
+    function addMascotShift() {
+      const characters = ['🎅 Santa', '⛄ Frosty', '🦌 Rudolph', '🧝 Elf', '🤶 Mrs. Claus', '🐻‍❄️ Polar Bear'];
+      const locations = ['Photo Tent', 'Entrance Gate', 'Candy Lane', 'S\'mores Area', 'Gift Shop', 'Food Court'];
+      
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;';
+      modal.innerHTML = `
+        <div style="background:var(--surface);padding:24px;border-radius:12px;width:90%;max-width:400px;border:1px solid var(--border);">
+          <h3 style="margin:0 0 16px;">Add Mascot Shift</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <select id="newMascotChar" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+              ${characters.map(c => `<option>${c}</option>`).join('')}
+            </select>
+            <select id="newMascotLoc" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+              ${locations.map(l => `<option>${l}</option>`).join('')}
+            </select>
+            <input type="text" id="newMascotPerformer" placeholder="Performer Name" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+            <div style="display:flex;gap:8px;">
+              <input type="time" id="newMascotStart" value="17:30" style="flex:1;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+              <input type="time" id="newMascotEnd" value="18:15" style="flex:1;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px;">
+              <button onclick="saveMascotShift()" class="btn btn-primary" style="flex:1;">Save</button>
+              <button onclick="this.closest('div').parentElement.parentElement.remove()" class="btn btn-secondary" style="flex:1;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    
+    function saveMascotShift() {
+      const char = document.getElementById('newMascotChar').value;
+      const loc = document.getElementById('newMascotLoc').value;
+      const performer = document.getElementById('newMascotPerformer').value || 'TBD';
+      const start = document.getElementById('newMascotStart').value;
+      const end = document.getElementById('newMascotEnd').value;
+      
+      const tbody = document.getElementById('mascotScheduleBody');
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td><strong>${start} - ${end}</strong></td>
+        <td>${char}</td>
+        <td>${loc}</td>
+        <td>${performer}</td>
+        <td><span class="badge badge-gray">Scheduled</span></td>
+      `;
+      tbody.appendChild(newRow);
+      
+      document.querySelector('[style*="position:fixed"]').remove();
+      
+      // Save to cloud
+      saveMascotSchedule();
+    }
+    
+    function saveMascotSchedule() {
+      const rows = document.querySelectorAll('#mascotScheduleBody tr');
+      const schedule = [];
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 4 && !cells[0].getAttribute('colspan')) {
+          schedule.push({
+            time: cells[0].textContent,
+            character: cells[1].textContent,
+            location: cells[2].textContent,
+            performer: cells[3].textContent
+          });
+        }
+      });
+      CloudSync.save('mascot_schedule', schedule);
+    }
+    
+    function printMascotSchedule() {
+      const content = document.getElementById('tab-mascots').innerHTML;
+      const win = window.open('', '_blank');
+      win.document.write(`
+        <html><head><title>Mascot Schedule</title>
+        <style>body{font-family:sans-serif;padding:20px;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ddd;padding:8px;text-align:left;}.badge{padding:4px 8px;border-radius:4px;font-size:12px;}</style>
+        </head><body>${content}</body></html>
+      `);
+      win.document.close();
+      win.print();
+    }
   </script>
 </body>
 </html>
